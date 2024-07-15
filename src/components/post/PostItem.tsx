@@ -12,14 +12,23 @@ interface PostItemProps {
     name: string;
     color?: string | null;
   }[];
+  tags?: {
+    id: string;
+    name: string;
+    color?: string | null;
+  }[];
   outline?: string;
 }
 
-const PostItem = (
-  { 
-    postName, title, coverUrl, categories, outline, isExposure
-  }: PostItemProps
-) => {
+const PostItem = ({
+  postName,
+  title,
+  coverUrl,
+  categories,
+  tags,
+  outline,
+  isExposure,
+}: PostItemProps) => {
   const cateColorPalette = {
     default: "black",
     gray: "bg-notion-gray",
@@ -33,7 +42,7 @@ const PostItem = (
     red: "bg-notion-red",
   };
 
-  if(isExposure === "F"){
+  if (isExposure === "F") {
     return null;
   }
 
@@ -50,34 +59,31 @@ const PostItem = (
             }}
           ></Image>
         </figure>
-        <div className="flex flex-col px-[15px] py-[15px]">
-          <div className="w-full overflow-hidden">
-            <p className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-medium">
-              {title}
-            </p>
+        <div className="flex flex-col gap-y-[15px] px-[15px] pb-[20px] pt-[15px]">
+          <div className="flex flex-col gap-y-[5px]">
+            <div className="w-full overflow-hidden">
+              <p className="overflow-hidden text-ellipsis whitespace-nowrap text-xl font-medium semi-desktop:text-lg">
+                {title}
+              </p>
+            </div>
+            {tags?.length ? (
+              <ul className="flex gap-x-1">
+                {tags.map((tag) => {
+                  return (
+                    <li
+                      key={tag.id}
+                      className="w-fit rounded px-[5px] py-[3px] bg-primary-gray-dark text-xs text-primary-white"
+                    >
+                      #{tag.name}
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : null}
           </div>
-          {categories?.length ? (
-            <ul className="flex gap-x-1">
-              {categories.map((category) => {
-                const cateColor = (
-                  category.color ? category.color : "default"
-                ) as keyof typeof cateColorPalette;
-                return (
-                  <li
-                    key={category.id}
-                    className={`${cateColorPalette[cateColor]} w-fit rounded-sm px-[4px] text-sm text-white`}
-                  >
-                    {category.name}
-                  </li>
-                );
-              })}
-            </ul>
-          ) : null}
           {outline?.length ? (
             <div>
-              <p className="line-clamp-2 text-sm opacity-50">
-                {outline}
-              </p>
+              <p className="line-clamp-2 text-sm opacity-50">{outline}</p>
             </div>
           ) : null}
         </div>

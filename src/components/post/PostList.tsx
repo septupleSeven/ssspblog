@@ -13,7 +13,7 @@ const PostList = (
       ) => {
 
         const { id, properties, cover } = post;
-        const { CATEGORY, NAME, OUTLINE, EXPOSURE, POSTNAME } = properties
+        const { CATEGORY, TAG, NAME, OUTLINE, EXPOSURE, POSTNAME } = properties
         
         if(!POSTNAME?.rich_text || !EXPOSURE?.select){
           return (
@@ -35,6 +35,7 @@ const PostList = (
                 : null
             }
             categories={CATEGORY?.multi_select}
+            tags={TAG?.multi_select}
             title={NAME?.title[0].plain_text}
             outline={OUTLINE?.rich_text[0]?.plain_text}
             isExposure={EXPOSURE.select.name}
