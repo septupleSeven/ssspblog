@@ -1,5 +1,5 @@
 import { Client } from "@notionhq/client";
-import { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import { BlockObjectResponse, PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 export const notion = new Client({
     auth: process.env.NOTION_TOKEN
@@ -14,7 +14,7 @@ export const getPostList = async () => {
         (res) => res.results
     );
 
-  return response;
+  return response as PageObjectResponse[];
 }
 
 export const getCurrentPost = async (currentPostName: string) => {
@@ -41,4 +41,21 @@ export const getBlocks = async (id: string) => {
         block_id: pageId,
     });
     return results as BlockObjectResponse[];
+}
+
+export const getSearch = async (title:string) => {
+    const query = title;
+
+    const response = await notion.search({
+        query: query,
+        filter: {
+          value: 'page',
+          property: 'object'
+        },
+    })
+    .then(
+        (res) => res.results
+    );
+
+    return response as PageObjectResponse[];
 }

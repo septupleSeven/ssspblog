@@ -59,7 +59,7 @@ const PostItem = ({
             }}
           ></Image>
         </figure>
-        <div className="flex flex-col gap-y-[15px] px-[15px] pb-[20px] pt-[15px]">
+        <div className="flex flex-col gap-y-[10px] px-[15px] pb-[20px] pt-[15px]">
           <div className="flex flex-col gap-y-[5px]">
             <div className="w-full overflow-hidden">
               <p className="overflow-hidden text-ellipsis whitespace-nowrap text-xl font-medium semi-desktop:text-lg">

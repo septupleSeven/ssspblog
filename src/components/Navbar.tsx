@@ -29,15 +29,9 @@ const Navbar = () => {
               </ul>
 
               <div className="flex items-center gap-x-5">
-                <button onClick={
-                  () => setTheme("dark")
-                }>다크</button>
-                <button onClick={
-                  () => setTheme("system")
-                }>시스템</button>
-                <button onClick={
-                  () => setTheme("light")
-                }>라이트</button>
+                <button onClick={() => setTheme("dark")}>다크</button>
+                <button onClick={() => setTheme("system")}>시스템</button>
+                <button onClick={() => setTheme("light")}>라이트</button>
               </div>
             </div>
           </div>
