@@ -5,64 +5,32 @@ import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { PostListProps } from "@/types/postList";
 import PostList from "@/components/post/PostList";
 
-type postInfoProps = {
-    title?: string | null
-    id: string
-}
-
-const getPostTitle = async () => {
+const getSearchedPost = async (keyword: string) => {
   const postList = await getPostList();
-  const postInfo:postInfoProps[] = postList.map(
-    (post: PageObjectResponse & PostListProps) => {
-        return {
-            title: post.properties.NAME?.title[0].plain_text,
-            id: post.id
-        }
-    }
+
+  const postInfo: PageObjectResponse[] = postList.filter(
+    (post: PageObjectResponse & PostListProps) =>
+      getFitsPost(keyword, post.properties.NAME?.title[0].plain_text!),
   );
 
   return postInfo;
 };
 
-const getSearchedPostInfo = async (keywords: string) => {
-  const postInfo = await getPostTitle();
+const getFitsPost = (keywords: string, postTitle: string) => {
+  if (!postTitle) return false;
 
   const escapedText = keywords.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const regex = new RegExp(escapedText, "i");
 
-  const filteredPost = postInfo.filter((post:postInfoProps) => {
-    return regex.test(post.title ? post.title : "")
-  });
-
-  return filteredPost;
+  return regex.test(postTitle);
 };
 
-const getSearchedPost = async (
-    postInfo: postInfoProps[]
-) => {
-
-    const searchedPost = new Array();
-
-    for(let i = 0; i < postInfo.length; i++){
-        const search = await getSearch(postInfo[i].title as string);
-        searchedPost.push(search[0]);
-    }
-
-    return searchedPost as PageObjectResponse[];
-
-}
-
-const page = async (
-  // zzz:any
-  { searchParams }: { searchParams: { query: string } },
-) => {
-  const searchedPostTitle = await getSearchedPostInfo(searchParams.query);
-  const test = await getSearchedPost(searchedPostTitle);
+const page = async ({ searchParams }: { searchParams: { query: string } }) => {
+  const searchedPost = await getSearchedPost(searchParams.query);
 
   return (
     <Container>
-      {/* <div>zzz</div> */}
-      <PostList posts={test} />
+      <PostList posts={searchedPost} />
     </Container>
   );
 };

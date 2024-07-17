@@ -51,7 +51,7 @@ export const getSearch = async (title:string) => {
         filter: {
           value: 'page',
           property: 'object'
-        },
+        }
     })
     .then(
         (res) => res.results

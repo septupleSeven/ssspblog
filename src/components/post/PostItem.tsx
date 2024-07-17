@@ -48,7 +48,7 @@ const PostItem = ({
 
   return (
     <li className="w-full overflow-hidden rounded-md dark:bg-primary-black">
-      <Link href={`/posts/${postName}`}>
+      <Link href={`/posts/${postName}`} className="block h-full">
         <figure className="relative flex aspect-video w-full items-center justify-center overflow-hidden bg-fuchsia-700">
           <Image
             src={coverUrl ? coverUrl : "/image/thumbnail404.png"}
