@@ -8,7 +8,13 @@ export const notion = new Client({
 export const getPostList = async () => {
     const databaseId = process.env.NOTION_DATABASEID as string;
     const response = await notion.databases.query({
-        database_id: databaseId
+        database_id: databaseId,
+        sorts: [
+            {
+                timestamp: "created_time",
+                direction: "descending"
+            }
+        ]
     })
     .then(
         (res) => res.results

@@ -1,8 +1,9 @@
 "use client";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-const Test = () => {
+const Searchbar = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { push } = useRouter();
@@ -21,10 +22,15 @@ const Test = () => {
   };
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if(e.key === "Enter"){
+    if (e.key === "Enter") {
       buttonRef.current?.click();
     }
-  }
+  };
+
+  const [isLoaded, setloaded] = useState(false);
+  useEffect(() => {
+    setloaded(true);
+  }, []);
 
   return (
     <div>
@@ -38,10 +44,10 @@ const Test = () => {
         onClick={() => push(`${pathname}search?${paramState.toString()}`)}
         ref={buttonRef}
       >
-        검색
+        {isLoaded && <MagnifyingGlassIcon className="size-6" />}
       </button>
     </div>
   );
 };
 
-export default Test;
+export default Searchbar;

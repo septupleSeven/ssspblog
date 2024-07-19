@@ -1,5 +1,5 @@
 import { ThemeProvider } from "next-themes";
-import Navbar from "./Navbar";
+import Navbar from "./nav/Navbar";
 
 interface ContainerProps {
   children: React.ReactNode;
