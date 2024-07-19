@@ -10,6 +10,33 @@ const nextConfig = {
             protocol: "https",
             hostname: "www.notion.so"
         }]
+    },
+    async redirects(){
+        return [
+            {
+                source: '/search',
+                missing: [
+                    {
+                        type: 'query',
+                        key: "keyword",
+                    }
+                ],
+                permanent: false,
+                destination: '/'
+            },
+            {
+                source: '/search',
+                missing: [
+                    {
+                        type: 'query',
+                        key: "keyword",
+                        value: ""
+                    }
+                ],
+                permanent: false,
+                destination: '/'
+            }
+        ]
     }
 };
 

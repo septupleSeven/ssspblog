@@ -5,14 +5,15 @@ import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import Searchbar from "@/components/Searchbar";
 
 export default async function Home() {
-
-  const getPosts = await getPostList() as PageObjectResponse[];
+  const getPosts = (await getPostList()) as PageObjectResponse[];
 
   return (
     <Container>
-      <section className="pb-[150px] pt-[80px] w-full">
+      <section className="w-full pb-[150px] pt-[80px]">
         <Searchbar />
-        <PostList posts={getPosts} />
+        <div className="mt-[40px]">
+          <PostList posts={getPosts} />
+        </div>
       </section>
     </Container>
   );
