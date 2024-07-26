@@ -5,22 +5,38 @@ export const notion = new Client({
     auth: process.env.NOTION_TOKEN
 });
 
+export const totalPage = 2;
+
 export const getPostList = async () => {
     const databaseId = process.env.NOTION_DATABASEID as string;
-    const response = await notion.databases.query({
-        database_id: databaseId,
-        sorts: [
-            {
-                timestamp: "created_time",
-                direction: "descending"
-            }
-        ]
-    })
-    .then(
-        (res) => res.results
-    );
+    
+    try {
+        const response = await notion.databases.query({
+            database_id: databaseId,
+            filter: {
+                property: "EXPOSURE",
+                select: {
+                    equals: "T"
+                }
+            },
+            sorts: [
+                {
+                    timestamp: "created_time",
+                    direction: "descending"
+                }
+            ],
+        });
 
-  return response as PageObjectResponse[];
+        return {
+            results: response.results,
+            total: response.results.length,
+            size: 2
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
+
 }
 
 export const getCurrentPost = async (currentPostName: string) => {

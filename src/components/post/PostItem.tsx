@@ -1,10 +1,10 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 interface PostItemProps {
   postName: string;
-  isExposure: string;
   title?: string;
   coverUrl?: string | null;
   categories?: {
@@ -20,14 +20,13 @@ interface PostItemProps {
   outline?: string;
 }
 
-const PostItem = ({
+const PostItem = React.memo(({
   postName,
   title,
   coverUrl,
   categories,
   tags,
   outline,
-  isExposure,
 }: PostItemProps) => {
   const cateColorPalette = {
     default: "black",
@@ -41,10 +40,6 @@ const PostItem = ({
     pink: "bg-notion-pink",
     red: "bg-notion-red",
   };
-
-  if (isExposure === "F") {
-    return null;
-  }
 
   return (
     <li className="w-full overflow-hidden rounded-md dark:bg-primary-black">
@@ -90,6 +85,8 @@ const PostItem = ({
       </Link>
     </li>
   );
-};
+}) ;
+PostItem.displayName = "PostItem"
+
 
 export default PostItem;

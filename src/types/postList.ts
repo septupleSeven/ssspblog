@@ -1,8 +1,14 @@
-import { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
+import { PageObjectResponse, RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
 
 type SelectColor = "default" | "gray" | "brown" | "orange" | "yellow" | "green" | "blue" | "purple" | "pink" | "red";
 
-export type PostListProps = {
+export type GetPostListProps = {
+  results: PageObjectResponse[];
+  total: number;
+  size: number;
+}
+
+export type PostListResultsProps = {
   properties: {
     CATEGORY?: {
       type: "multi_select";
@@ -28,13 +34,6 @@ export type PostListProps = {
       type: "rich_text";
       rich_text: Array<RichTextItemResponse>;
     },
-    EXPOSURE?: {
-      type: "select";
-      select: {
-        name: string;
-        color: SelectColor
-      };
-    }
     POSTNAME?: {
       type: "rich_text";
       rich_text: Array<RichTextItemResponse>;

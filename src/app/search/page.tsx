@@ -1,10 +1,11 @@
 import Container from "@/components/Container";
 import React from "react";
-import { getPostList, getSearch } from "../../../api/notion";
+import { getPostList } from "../../../api/notion";
 import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
-import { PostListProps } from "@/types/postList";
+import { GetPostListProps, PostListResultsProps } from "@/types/postList";
 import PostList from "@/components/post/PostList";
 import Empty from "@/components/Empty";
+import Pagination from "@/components/Pagination";
 
 const getFitsPost = (keywords: string, postTitle: string) => {
   if (!postTitle) return false;
@@ -18,16 +19,18 @@ const getFitsPost = (keywords: string, postTitle: string) => {
 const getSearchedPost = async (keyword: string) => {
   if (!keyword) return false;
 
-  const postList = await getPostList();
+  const { results, size } = (await getPostList()) as GetPostListProps;
 
-  const postInfo: PageObjectResponse[] = postList.filter(
-    (post: PageObjectResponse & PostListProps) =>
+  const postInfo: PageObjectResponse[] = results.filter(
+    (post: PageObjectResponse & PostListResultsProps) =>
       getFitsPost(keyword, post.properties.NAME?.title[0].plain_text!),
   );
 
-  if (!postInfo.length) return "empty";
-
-  return postInfo;
+  return {
+    results: postInfo,
+    total: postInfo.length,
+    size: size
+  };
 };
 
 const page = async ({
@@ -35,9 +38,9 @@ const page = async ({
 }: {
   searchParams: { keyword: string };
 }) => {
-  const searchedPost = await getSearchedPost(searchParams.keyword);
+  const { results, total, size } = await getSearchedPost(searchParams.keyword) as GetPostListProps;
 
-  if (!searchedPost) {
+  if (!results) {
     return (
       <Container>
         <div>forbidden</div>
@@ -47,10 +50,13 @@ const page = async ({
     return (
       <Container>
         <section className="w-full pb-[150px] pt-[80px]">
-          {!(searchedPost === "empty") ? (
-            <PostList posts={searchedPost} />
+          {total ? (
+            <>
+              <PostList posts={results} size={size} page={1} />
+              <Pagination size={size} total={total} />
+            </>
           ) : (
-            <Empty title="검색 결과가 없습니다."/>
+            <Empty title="검색 결과가 없습니다." />
           )}
         </section>
       </Container>

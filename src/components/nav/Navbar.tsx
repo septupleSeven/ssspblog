@@ -10,7 +10,7 @@ const Navbar = () => {
       <div className="h-[65px] w-full px-5">
         <nav className="flex h-full w-full items-center">
           <div className="flex w-full items-center justify-between">
-            <Link href="/">로고하</Link>
+            <Link href="/">로고</Link>
             <Theme />
           </div>
         </nav>

@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { getBlocks, getCurrentPost } from "../../../../api/notion";
 import Container from "@/components/Container";
 import { NotionRenderer } from "@notion-render/client";
@@ -6,9 +6,7 @@ import {
   BlockObjectResponse,
   PageObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
-import { useSearchParams } from "next/navigation";
-import Test from "@/components/Test";
-import { PostListProps } from "@/types/postList";
+import { PostListResultsProps } from "@/types/postList";
 
 const renderer = new NotionRenderer();
 const getRenderedBlocks = async (blocks: BlockObjectResponse[]) => {
@@ -24,7 +22,7 @@ const page = async ({ params }: { params: { id: string } }) => {
   const getNodeData = await getRenderedBlocks(currentBlocks);
 
   const { properties } = currentPageRes[0] as PageObjectResponse &
-    PostListProps;
+  PostListResultsProps;
   const { CATEGORY, NAME, OUTLINE, EXPOSURE, POSTNAME, TAG } = properties;
 
   return (
