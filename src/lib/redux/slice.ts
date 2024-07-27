@@ -12,6 +12,8 @@ export const pageSlice = createSlice({
     reducers: {
         setCurrentPage: (page, action:PayloadAction<number>) => {
             page.current = action.payload
+            const pageStr = page.current.toString();
+            sessionStorage.setItem("page", pageStr);
         }
     }
 });
@@ -23,7 +25,9 @@ export const groupSlice = createSlice({
     } as initialStateType,
     reducers: {
         setCurrentGroupNext: (group, action:PayloadAction<number>) => {
-            group.current += action.payload
+            group.current += action.payload;
+            const groupStr = group.current.toString();
+            sessionStorage.setItem("group", groupStr);
         },
         setCurrentGroupPrev: (group, action:PayloadAction<number>) => {
            if(group.current > 0) {
@@ -31,6 +35,8 @@ export const groupSlice = createSlice({
            }else{
             group.current = 0
            }
+           const groupStr = group.current.toString();
+           sessionStorage.setItem("group", groupStr);
         }
     }
 });

@@ -19,10 +19,22 @@ const Pagination = ({ size, total }: { size: number; total: number }) => {
   const paginataionArr = Array.from({ length: pageLength }, (_, idx) => idx + 1);
   const slicedPaginationArr = paginataionArr.slice(groupStore, groupStore + size);
 
+  const handleNextGroup = () => {
+    dispatch(setCurrentGroupNext(size));
+    dispatch(setCurrentPage(groupStore + size + 1));
+  };
+
+  const handlePrevGroup = () => {
+    dispatch(setCurrentGroupPrev(size));
+    dispatch(setCurrentPage(groupStore));
+  };
+
   return (
     <div>
       {
-        <button onClick={() => dispatch(setCurrentGroupPrev(size))}>이전</button>
+        !groupStore  
+        ? null
+        : <button onClick={() => dispatch(handlePrevGroup)}>이전</button>
       }
       <ul className="flex gap-x-[10px]">
         {slicedPaginationArr.map((pager, idx) => (
@@ -35,7 +47,7 @@ const Pagination = ({ size, total }: { size: number; total: number }) => {
       </ul>
       {
         paginataionArr.length > (groupStore + size)
-        ? <button onClick={() => dispatch(setCurrentGroupNext(size))}>다음</button>
+        ? <button onClick={() => dispatch(handleNextGroup)}>다음</button>
         : null
       }
     </div>
