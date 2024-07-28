@@ -6,6 +6,7 @@ import { GetPostListProps, PostListResultsProps } from "@/types/postList";
 import PostList from "@/components/post/PostList";
 import Empty from "@/components/Empty";
 import Pagination from "@/components/Pagination";
+import StoreProvider from "@/components/StoreProvider";
 
 const getFitsPost = (keywords: string, postTitle: string) => {
   if (!postTitle) return false;
@@ -49,12 +50,12 @@ const page = async ({
   } else {
     return (
       <Container>
-        <section className="w-full pb-[150px] pt-[80px]">
+        <section className="w-full pb-[150px] pt-[80px] semi-desktop:px-[20px]">
           {total ? (
-            <>
+            <StoreProvider>
               <PostList posts={results} size={size} page={1} />
               <Pagination size={size} total={total} />
-            </>
+            </StoreProvider>
           ) : (
             <Empty title="검색 결과가 없습니다." />
           )}

@@ -28,7 +28,6 @@ const PostList = ({
   const pageStore = useSelector<RootState>(
     (state) => state.page.current,
   ) as number;
-  const [postList, setPostList] = useState<PageObjectResponse[]>([]);
 
   const { start, end } = getPageIndex(pageStore, size);
 
@@ -36,13 +35,9 @@ const PostList = ({
     return posts.slice(start, end);
   }, [posts, start, end]);
 
-  useEffect(() => {
-    setPostList([...slicedPostList]);
-  }, [slicedPostList])
-
   return (
-    <ul className="mx-auto my-0 grid w-full max-w-[1320px] grid-cols-3 gap-5 semi-desktop:px-[20px]">
-      {postList.map((post: PageObjectResponse & PostListResultsProps) => {
+    <ul className="mx-auto my-0 grid w-full max-w-[1320px] grid-cols-3 gap-5">
+      {slicedPostList.map((post: PageObjectResponse & PostListResultsProps) => {
         const { id, properties, cover } = post;
         const { CATEGORY, TAG, NAME, OUTLINE, POSTNAME } = properties;
 

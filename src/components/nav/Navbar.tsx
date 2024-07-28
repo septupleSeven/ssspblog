@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Theme from "./Theme";
 import Image from "next/image";
-import React, { forwardRef } from "react";
+import React from "react";
 
 const Navbar = () => {
 
@@ -12,7 +12,7 @@ const Navbar = () => {
     href?: string
   }
   
-  const LogoButton = forwardRef<HTMLAnchorElement, LogoButtonProps>(({
+  const LogoButton = React.forwardRef<HTMLAnchorElement, LogoButtonProps>(({
     onClick,
     href
   }, ref) => {
@@ -26,8 +26,8 @@ const Navbar = () => {
   LogoButton.displayName = "LogoButton";
 
   const resetPage = () => {
-    sessionStorage.removeItem("page")
-    sessionStorage.removeItem("group")
+    sessionStorage.setItem("page", "1");
+    sessionStorage.setItem("group", "0");
   }
 
 

@@ -13,7 +13,7 @@ export default async function Home() {
   
   return (
     <Container>
-      <section className="w-full pb-[150px] pt-[80px]">
+      <section className="w-full pb-[150px] pt-[80px] semi-desktop:px-[20px]">
         <Searchbar />
         <div className="mt-[40px]">
           <StoreProvider>

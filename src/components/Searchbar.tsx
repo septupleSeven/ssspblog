@@ -45,7 +45,7 @@ const Searchbar = () => {
   }, []);
 
   return (
-    <div className="mx-auto my-0 w-full max-w-[1320px] semi-desktop:px-[20px]">
+    <div className="mx-auto my-0 w-full max-w-[1320px]">
       <div
         className={`flex items-center gap-x-[10px] rounded-md bg-primary-black px-[15px] py-[10px] ${isFocus ? "border border-primary-white" : ""}`}
       >
