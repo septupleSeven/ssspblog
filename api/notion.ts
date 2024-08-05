@@ -30,7 +30,7 @@ export const getPostList = async () => {
         return {
             results: response.results,
             total: response.results.length,
-            size: 2
+            size: 6
         }
 
     } catch (error) {

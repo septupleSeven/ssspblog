@@ -1,33 +1,29 @@
 import React from "react";
-import { getBlocks, getCurrentPost } from "../../../../api/notion";
+import { getCurrentPost } from "../../../../api/notion";
 import Container from "@/components/Container";
-import { NotionRenderer } from "@notion-render/client";
-import {
-  BlockObjectResponse,
-  PageObjectResponse,
-} from "@notionhq/client/build/src/api-endpoints";
-import { PostListResultsProps } from "@/types/postList";
 
-const renderer = new NotionRenderer();
-const getRenderedBlocks = async (blocks: BlockObjectResponse[]) => {
-  const html = renderer.render(...blocks);
-  return html;
-};
+import { NotionAPI } from 'notion-client';
+
+import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import { PostListResultsProps } from "@/types/postList";
+import PostDetail from "@/components/post/PostDetail";
+import PostDetailAnchor from "@/components/post/PostDetailAnchor";
+
+const renderer = new NotionAPI();
 
 const page = async ({ params }: { params: { id: string } }) => {
   const currentPageRes = await getCurrentPost(params.id);
   const currentPageId = currentPageRes[0].id;
 
-  const currentBlocks = await getBlocks(currentPageId);
-  const getNodeData = await getRenderedBlocks(currentBlocks);
+  const recordMap = await renderer.getPage(currentPageId);
 
   const { properties } = currentPageRes[0] as PageObjectResponse &
   PostListResultsProps;
-  const { CATEGORY, NAME, OUTLINE, EXPOSURE, POSTNAME, TAG } = properties;
+  const { CATEGORY, NAME, TAG } = properties;
 
   return (
     <Container>
-      <section className="w-full pb-[150px] pt-[80px]">
+      <section className="relative w-full pb-[150px] pt-[80px]">
         <div className="mx-auto my-0 max-w-[1320px] semi-desktop:px-[20px]">
           <div className="flex flex-col gap-y-[20px] border-b-2 border-black pb-[30px] dark:border-primary-white">
             <div className="flex flex-col gap-y-[5px]">
@@ -42,7 +38,7 @@ const page = async ({ params }: { params: { id: string } }) => {
                   ))}
                 </ul>
               ) : null}
-              <h1 className="text-3xl font-medium">
+              <h1 className="text-3xl font-bold">
                 {NAME?.title[0].plain_text}
               </h1>
             </div>
@@ -59,11 +55,9 @@ const page = async ({ params }: { params: { id: string } }) => {
               </ul>
             ) : null}
           </div>
-          <div
-            className="pt-[30px]"
-            dangerouslySetInnerHTML={{ __html: getNodeData }}
-          ></div>
+          <PostDetail recordMap={recordMap} />
         </div>
+        <PostDetailAnchor recordMap={recordMap} />
       </section>
     </Container>
   );
