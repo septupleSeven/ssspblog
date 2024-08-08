@@ -1,24 +1,23 @@
 import React from "react";
 import { getCurrentPost } from "../../../../api/notion";
 import Container from "@/components/Container";
-
-import { NotionAPI } from 'notion-client';
-
+import { NotionAPI } from "notion-client";
 import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
-import { PostListResultsProps } from "@/types/postList";
+import { PostListResultsProps } from "@/types/post";
 import PostDetail from "@/components/post/PostDetail";
 import PostDetailAnchor from "@/components/post/PostDetailAnchor";
-
+import PostDetailBottom from "@/components/post/PostDetailBottom";
+import StoreProvider from "@/components/StoreProvider";
 const renderer = new NotionAPI();
 
 const page = async ({ params }: { params: { id: string } }) => {
-  const currentPageRes = await getCurrentPost(params.id);
-  const currentPageId = currentPageRes[0].id;
+  const { current, prev, next } = await getCurrentPost(params.id);
+  const currentPageId = current[0].id;
 
   const recordMap = await renderer.getPage(currentPageId);
 
-  const { properties } = currentPageRes[0] as PageObjectResponse &
-  PostListResultsProps;
+  const { properties } = current[0] as PageObjectResponse &
+    PostListResultsProps;
   const { CATEGORY, NAME, TAG } = properties;
 
   return (
@@ -56,6 +55,9 @@ const page = async ({ params }: { params: { id: string } }) => {
             ) : null}
           </div>
           <PostDetail recordMap={recordMap} />
+          <StoreProvider>
+            <PostDetailBottom prev={prev} next={next} />
+          </StoreProvider>
         </div>
         <PostDetailAnchor recordMap={recordMap} />
       </section>

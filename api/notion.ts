@@ -1,11 +1,10 @@
+import { GetPostListProps, isPropRichText, isPropTitle } from "@/types/post";
 import { Client } from "@notionhq/client";
 import { BlockObjectResponse, PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 export const notion = new Client({
     auth: process.env.NOTION_TOKEN
 });
-
-export const totalPage = 2;
 
 export const getPostList = async () => {
     const databaseId = process.env.NOTION_DATABASEID as string;
@@ -30,7 +29,7 @@ export const getPostList = async () => {
         return {
             results: response.results,
             total: response.results.length,
-            size: 6
+            size: 2
         }
 
     } catch (error) {
@@ -41,20 +40,83 @@ export const getPostList = async () => {
 
 export const getCurrentPost = async (currentPostName: string) => {
     const databaseId = process.env.NOTION_DATABASEID as string;
-    const response = await notion.databases.query({
+
+    const { results } = (await getPostList()) as GetPostListProps;
+
+    const currentPost = await notion.databases.query({
         database_id: databaseId,
         filter: {
-            property: "POSTNAME",
-            rich_text: {
-                equals: currentPostName
-            }
+            and: [
+                {
+                    property: "EXPOSURE",
+                    select: {
+                        equals: "T"
+                    }
+                },
+                {
+                    property: "POSTNAME",
+                    rich_text: {
+                        equals: currentPostName
+                    }
+                },
+            ]
         }
     })
     .then(
         (res) => res.results
     );
 
-    return response;
+    const currentPostId = currentPost[0].id;
+    const currentPostIndex = results.findIndex((el) => el.id === currentPostId)
+
+    const nearbyPost:{
+        prev: {
+            POSTNAME: string | null
+            NAME: string | null
+        };
+        next: {
+            POSTNAME: string | null
+            NAME: string | null
+        };
+    } = {
+        prev: {
+            POSTNAME: "",
+            NAME: ""
+        },
+        next: {
+            POSTNAME: "",
+            NAME: ""
+        }
+    };
+
+    if(
+        currentPostIndex > 0
+    ){
+        const prevPostName = results[currentPostIndex - 1].properties.POSTNAME;
+        nearbyPost.prev.POSTNAME = isPropRichText(prevPostName)
+        ? prevPostName.rich_text[0].plain_text as string
+        : null ;
+        const prevName = results[currentPostIndex - 1].properties.NAME;
+        nearbyPost.prev.NAME = isPropTitle(prevName)
+        ? prevName.title[0].plain_text as string
+        : null ;
+    }
+
+    if (currentPostIndex < results.length - 1) {
+        const nextPostName = results[currentPostIndex + 1].properties.POSTNAME;
+        nearbyPost.next.POSTNAME = isPropRichText(nextPostName)
+        ? nextPostName.rich_text[0].plain_text
+        : null ;
+        const nextName = results[currentPostIndex + 1].properties.NAME;
+        nearbyPost.next.NAME = isPropTitle(nextName)
+        ? nextName.title[0].plain_text
+        : null ;
+    }
+
+    return {
+        current: currentPost,
+        ...nearbyPost
+    };
 }
 
 export const getBlocks = async (id: string) => {

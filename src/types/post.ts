@@ -41,5 +41,21 @@ export type PostListResultsProps = {
   }
 };
 
+export function isPropRichText(props: any): props is {
+  type: "rich_text";
+  rich_text: Array<RichTextItemResponse>;
+  id: string;
+} {
+  return props.type === "rich_text";
+}
+
+export function isPropTitle(props: any): props is {
+  type: "title";
+  title: Array<RichTextItemResponse>;
+  id: string;
+} {
+  return props.type === "title";
+}
+
 
 

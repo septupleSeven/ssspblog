@@ -36,6 +36,28 @@ const Searchbar = () => {
       return false;
     }
 
+    // if(sessionStorage.getItem("page")){
+    //   sessionStorage.removeItem("page");
+    // }
+
+    // if(sessionStorage.getItem("group")){
+    //   sessionStorage.removeItem("group");
+    // }
+
+    // if(sessionStorage.getItem("paging")){
+    //   const initialState = {
+    //     home: {
+    //         page: 1,
+    //         group: 0
+    //     },
+    //     search: {
+    //         page: 1,
+    //         group: 0
+    //     }
+    //   };
+    //   sessionStorage.setItem("paging", JSON.stringify(initialState));
+    // }
+
     return push(`${pathname}search?${paramState.toString()}`);
   };
 

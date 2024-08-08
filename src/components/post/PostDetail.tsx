@@ -39,7 +39,7 @@ const PostDetail = ({ recordMap }: { recordMap: ExtendedRecordMap }) => {
   }, [theme]);
   
   return (
-    <div className={`post_detail__container ${currentTheme} pt-[30px]`}>
+    <div className={`post_detail__container ${currentTheme} pt-[30px] pb-[50px]`}>
       <NotionRenderer
         darkMode
         recordMap={recordMap}

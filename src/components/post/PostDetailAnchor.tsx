@@ -15,7 +15,7 @@ const PostDetailAnchor = ({ recordMap }: { recordMap: ExtendedRecordMap }) => {
 
   const headerBlocks = blockIds
     .filter((id) => {
-      const type = recordMap.block[id].value.type as string;
+      const type = recordMap.block[id]?.value?.type as string;
       if (type === "header") return id;
     })
     .map((filterdId) => ({

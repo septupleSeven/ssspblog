@@ -2,7 +2,7 @@ import Container from "@/components/Container";
 import PostList from "@/components/post/PostList";
 import { getPostList } from "../../../api/notion";
 import Searchbar from "@/components/Searchbar";
-import { GetPostListProps } from "@/types/postList";
+import { GetPostListProps } from "@/types/post";
 import Pagination from "@/components/Pagination";
 import StoreProvider from "@/components/StoreProvider";
 
@@ -17,8 +17,7 @@ export default async function Home() {
         <Searchbar />
         <div className="mt-[40px]">
           <StoreProvider>
-            <PostList posts={results} size={size} />
-            <Pagination size={size} total={total} />
+            <PostList posts={results} size={size} total={total} />
           </StoreProvider>
         </div>
       </section>

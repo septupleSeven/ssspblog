@@ -1,11 +1,23 @@
 import { configureStore } from "@reduxjs/toolkit"
-import { pageSliceReducer, groupSliceReducer } from "./slice";
+import { pageSliceReducer, groupSliceReducer, typeSliceReducer, pagingSliceReducer } from "./slice";
+
+// export const makeStore = () => {
+//   return configureStore({
+//     reducer: {
+//       page: pageSliceReducer,
+//       group: groupSliceReducer,
+//       type: typeSliceReducer
+//     }
+//   })
+// };
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       page: pageSliceReducer,
-      group: groupSliceReducer
+      group: groupSliceReducer,
+      type: typeSliceReducer,
+      paging: pagingSliceReducer
     }
   })
 };
