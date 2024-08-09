@@ -22,6 +22,7 @@ const config: Config = {
         "primary-gray-light": "#383F3D",
         "primary-black": "#232E2B",
         "primary-white": "#CAD8D5",
+        "primary-white-50": "rgba(202, 216, 213, 0.5)",
         "notion-gray": "#9B9A97",
         "notion-brown": "#64473A",
         "notion-orange": "#D9730D",

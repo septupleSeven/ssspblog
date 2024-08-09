@@ -30,18 +30,20 @@ const PostDetailAnchor = ({ recordMap }: { recordMap: ExtendedRecordMap }) => {
           <motion.ul
             initial={{
               clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0% 100%)",
+              display: "none"
             }}
             animate={{
               clipPath: `${
                 isOpen ? "polygon(0 0%, 100% 0%, 100% 100%, 0% 100%)"
                 : "polygon(0 100%, 100% 100%, 100% 100%, 0% 100%)"
               }`,
+              display: `${isOpen ? "flex" : "none"}`
             }}
             transition={{ 
               ease: "easeInOut",
               duration: 0.3 
             }}
-            className="max-w-[250px] w-full p-[20px] pl-[8px] rounded-[5px] flex flex-col gap-y-[10px] dark:bg-primary-black"
+            className="max-w-[250px] w-full p-[20px] pl-[8px] rounded-[5px] flex-col gap-y-[10px] dark:bg-primary-black"
           >
             {headerBlocks.map((blockId) => (
               <li key={blockId.id} className="group text-sm flex gap-x-[10px]">

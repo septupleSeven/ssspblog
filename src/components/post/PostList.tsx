@@ -38,15 +38,10 @@ const PostList = ({
   const pathname = usePathname();
   const currentPathname = pathnameCondition(pathname);
 
-  // const pageStore = useSelector<RootState>(
-  //   (state) => state.page.current,
-  // ) as number;
-
   const pagingStore = useSelector<RootState>(
     (state) => state.paging,
   ) as Record<string, initialStatePaging>;
 
-  // const { start, end } = getPageIndex(pageStore, size);
   const { start, end } = getPageIndex(pagingStore[currentPathname].page, size);
 
   const slicedPostList = useMemo(() => {

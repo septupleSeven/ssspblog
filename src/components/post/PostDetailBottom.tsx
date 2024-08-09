@@ -1,14 +1,21 @@
-"use client"
+"use client";
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
-import { PageDispatch } from "@/lib/redux/store";
-import { useDispatch } from "react-redux";
-import { setCurrentPage } from "@/lib/redux/slice";
+import { PageDispatch, RootState } from "@/lib/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  initialStatePaging,
+  setGroup,
+  setPage,
+  setSearchGroup,
+  setSearchPage,
+} from "@/lib/redux/slice";
 
 const PostDetailBottom = ({
   prev,
   next,
+  indexInfo,
 }: {
   prev: {
     POSTNAME: string | null;
@@ -18,16 +25,36 @@ const PostDetailBottom = ({
     POSTNAME: string | null;
     NAME: string | null;
   };
+  indexInfo: {
+    currentIndex: number;
+    total: number;
+    size: number;
+  };
 }) => {
+  const pagingStore = useSelector<RootState>((state) => state.paging) as Record<
+    string,
+    initialStatePaging
+  >;
+
+  const { currentIndex, size } = indexInfo;
+
   const dispatch = useDispatch<PageDispatch>();
 
   useEffect(() => {
-    const getPage = sessionStorage.getItem("page");
+    const getPaging = sessionStorage.getItem("paging");
 
-    if (getPage) {
-      dispatch(setCurrentPage(Number(getPage)));
+    if (getPaging) {
+      const getPagingData = JSON.parse(getPaging);
+      dispatch(setSearchPage(getPagingData.search.page));
+      dispatch(setSearchGroup(getPagingData.search.group));
     }
-  }, [dispatch]);
+
+    const getPageNum = Math.floor(currentIndex / size) + 1;
+    const getGroupNum = Math.floor((getPageNum - 1) / size) * size;
+
+    dispatch(setPage(getPageNum));
+    dispatch(setGroup(getGroupNum));
+  }, [dispatch, pagingStore, currentIndex, size]);
 
   return (
     <div>
@@ -35,7 +62,7 @@ const PostDetailBottom = ({
         {prev.POSTNAME ? (
           <Link
             href={`/posts/${prev.POSTNAME}`}
-            className="group flex items-center gap-x-[20px] border-b pb-[15px] pt-[15px] dark:border-primary-white"
+            className="dark:border-primary-white-50 group flex items-center gap-x-[20px] border-b pb-[15px] pt-[15px]"
           >
             <ChevronUpIcon className="size-8" />
             <div className="flex w-full flex-col gap-y-[3px] overflow-hidden">
@@ -61,7 +88,11 @@ const PostDetailBottom = ({
           </Link>
         ) : null}
       </div>
-      <Link href={`/`}>목록으로</Link>
+      <div className="flex w-full justify-end mt-[30px]">
+        <Link href={`/`} className="px-[20px] py-[10px] text-lg rounded dark:bg-primary-black">
+          목록으로
+        </Link>
+      </div>
     </div>
   );
 };

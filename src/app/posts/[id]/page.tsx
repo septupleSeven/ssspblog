@@ -11,7 +11,7 @@ import StoreProvider from "@/components/StoreProvider";
 const renderer = new NotionAPI();
 
 const page = async ({ params }: { params: { id: string } }) => {
-  const { current, prev, next } = await getCurrentPost(params.id);
+  const { current, indexInfo, prev, next } = await getCurrentPost(params.id);
   const currentPageId = current[0].id;
 
   const recordMap = await renderer.getPage(currentPageId);
@@ -56,7 +56,7 @@ const page = async ({ params }: { params: { id: string } }) => {
           </div>
           <PostDetail recordMap={recordMap} />
           <StoreProvider>
-            <PostDetailBottom prev={prev} next={next} />
+            <PostDetailBottom prev={prev} next={next} indexInfo={indexInfo}  />
           </StoreProvider>
         </div>
         <PostDetailAnchor recordMap={recordMap} />
