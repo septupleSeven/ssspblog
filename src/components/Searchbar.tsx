@@ -36,28 +36,6 @@ const Searchbar = () => {
       return false;
     }
 
-    // if(sessionStorage.getItem("page")){
-    //   sessionStorage.removeItem("page");
-    // }
-
-    // if(sessionStorage.getItem("group")){
-    //   sessionStorage.removeItem("group");
-    // }
-
-    // if(sessionStorage.getItem("paging")){
-    //   const initialState = {
-    //     home: {
-    //         page: 1,
-    //         group: 0
-    //     },
-    //     search: {
-    //         page: 1,
-    //         group: 0
-    //     }
-    //   };
-    //   sessionStorage.setItem("paging", JSON.stringify(initialState));
-    // }
-
     return push(`${pathname}search?${paramState.toString()}`);
   };
 
@@ -67,12 +45,12 @@ const Searchbar = () => {
   }, []);
 
   return (
-    <div className="mx-auto my-0 w-full max-w-[1320px]">
+    <div className="mx-auto my-0 w-full max-w-[1024px]">
       <div
-        className={`flex items-center gap-x-[10px] rounded-md bg-primary-black px-[15px] py-[10px] ${isFocus ? "border border-primary-white" : ""}`}
+        className={`flex items-center gap-x-[10px] shadow-reg rounded-md bg-primary-white px-[15px] py-[10px] duration-[0.3s] dark:bg-primary-black ${isFocus ? "border border-primary" : ""}`}
       >
         <input
-          className="focus: h-full w-full bg-transparent text-[18px] outline-none"
+          className="placeholder:text-primary-black-50 dark:placeholder:text-primary-white-50 focus: h-full w-full bg-transparent text-[18px] outline-none"
           type="text"
           onChange={(e) => handleSearchQuery(e.target.value)}
           onKeyUp={(e) => handleEnterEvent(e)}
@@ -81,13 +59,13 @@ const Searchbar = () => {
           placeholder="검색어를 입력해주세요"
         />
         <button
-          className="flex min-h-[35px] min-w-[35px] items-center justify-center rounded-full bg-primary-white"
+          className="flex min-h-[35px] min-w-[35px] items-center justify-center rounded-full bg-primary"
           type="button"
           onClick={() => handleSearch()}
           ref={buttonRef}
         >
           {isLoaded && (
-            <MagnifyingGlassIcon className="size-5 text-primary-black" />
+            <MagnifyingGlassIcon className="size-5 text-white" />
           )}
         </button>
       </div>

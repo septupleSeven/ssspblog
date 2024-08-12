@@ -58,16 +58,16 @@ const PostDetailBottom = ({
 
   return (
     <div>
-      <div className="border-b-2 border-t-2 dark:border-primary-white">
+      <div className="border-b-2 border-t-2 border-primary-black dark:border-primary-white">
         {prev.POSTNAME ? (
           <Link
             href={`/posts/${prev.POSTNAME}`}
-            className="dark:border-primary-white-50 group flex items-center gap-x-[20px] border-b pb-[15px] pt-[15px]"
+            className="border-primary-black-50 dark:border-primary-white-50 group flex items-center gap-x-[20px] border-b pb-[15px] pt-[15px]"
           >
-            <ChevronUpIcon className="size-8" />
+            <ChevronUpIcon className="size-8 duration-[0.3s] group-hover:translate-y-[-5px]" />
             <div className="flex w-full flex-col gap-y-[3px] overflow-hidden">
-              <span className="text-sm opacity-50">이전 글</span>
-              <span className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-medium group-hover:underline">
+              <span className="text-sm opacity-50 duration-[0.3s] group-hover:opacity-100">이전 글</span>
+              <span className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-medium duration-[0.3s] group-hover:underline group-hover:text-primary semi-mobile:text-base">
                 {prev.NAME}
               </span>
             </div>
@@ -78,10 +78,10 @@ const PostDetailBottom = ({
             href={`/posts/${next.POSTNAME}`}
             className="group flex items-center gap-x-[20px] pb-[15px] pt-[15px]"
           >
-            <ChevronDownIcon className="size-8" />
+            <ChevronDownIcon className="size-8 duration-[0.3s] group-hover:translate-y-[5px]" />
             <div className="flex flex-col gap-y-[3px] overflow-hidden">
-              <span className="text-sm opacity-50">다음 글</span>
-              <span className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-medium group-hover:underline">
+              <span className="text-sm opacity-50 duration-[0.3s] group-hover:opacity-100">다음 글</span>
+              <span className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-medium duration-[0.3s] group-hover:underline group-hover:text-primary semi-mobile:text-base">
                 {next.NAME}
               </span>
             </div>
@@ -89,7 +89,7 @@ const PostDetailBottom = ({
         ) : null}
       </div>
       <div className="flex w-full justify-end mt-[30px]">
-        <Link href={`/`} className="px-[20px] py-[10px] text-lg rounded dark:bg-primary-black">
+        <Link href={`/`} className="px-[20px] py-[10px] flex justify-center items-center text-lg text-white text-center rounded duration-[0.3s] bg-primary semi-mobile:w-full semi-mobile:text-base">
           목록으로
         </Link>
       </div>

@@ -50,7 +50,7 @@ const PostList = ({
 
   return (
     <>
-      <ul className="mx-auto my-0 grid w-full max-w-[1320px] grid-cols-3 gap-5">
+      <ul className="mx-auto my-0 grid w-full max-w-[1024px] grid-cols-3 gap-5 semi-tab:grid-cols-2 semi-mobile:grid-cols-1">
         {slicedPostList.map(
           (post: PageObjectResponse & PostListResultsProps) => {
             const { id, properties, cover } = post;

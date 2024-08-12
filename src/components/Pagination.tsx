@@ -56,14 +56,14 @@ const Pagination = ({
   const Pager = React.memo(({ pager }: { pager: number }) => {
     return (<li className={pager === 
     pagingStore[pathname].page 
-    ? "font-bold" : "font-normal opacity-40"}>
+    ? "font-bold" : "font-normal opacity-40 hover:opacity-100 duration-[0.3s]"}>
         <button onClick={() => {dispatch(setPage(pager))}}>{pager}</button>
       </li>)
   });
   Pager.displayName = "Pager";
 
   return (
-    <div className="w-full flex justify-center items-center gap-x-[15px] mt-[30px]">
+    <div className="w-full flex justify-center items-center gap-x-[15px] mt-[40px]">
       {
         !pagingStore[pathname].group  
         ? null

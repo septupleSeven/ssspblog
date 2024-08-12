@@ -22,12 +22,12 @@ const page = async ({ params }: { params: { id: string } }) => {
 
   return (
     <Container>
-      <section className="relative w-full pb-[150px] pt-[80px]">
-        <div className="mx-auto my-0 max-w-[1320px] semi-desktop:px-[20px]">
-          <div className="flex flex-col gap-y-[20px] border-b-2 border-black pb-[30px] dark:border-primary-white">
+      <section className="relative w-full pb-[120px] pt-[80px] semi-mobile:pb-[80px] semi-mobile:pt-[60px]">
+        <div className="mx-auto my-0 max-w-[1024px] semi-desktop:px-[20px]">
+          <div className="flex flex-col gap-y-[20px] border-b-2 border-primary-black pb-[30px] dark:border-primary-white">
             <div className="flex flex-col gap-y-[5px]">
               {CATEGORY?.multi_select?.length ? (
-                <ul className="flex gap-x-[5px] text-sm opacity-60">
+                <ul className="flex flex-wrap gap-x-[5px] gap-y-[5px] text-sm opacity-60">
                   {CATEGORY.multi_select.map((category, idx) => (
                     <li key={category.id}>
                       {CATEGORY?.multi_select?.length !== idx + 1
@@ -37,16 +37,16 @@ const page = async ({ params }: { params: { id: string } }) => {
                   ))}
                 </ul>
               ) : null}
-              <h1 className="text-3xl font-bold">
+              <h1 className="text-3xl font-bold semi-tab:text-2xl semi-mobile:text-[1.375rem]">
                 {NAME?.title[0].plain_text}
               </h1>
             </div>
             {TAG?.multi_select?.length ? (
-              <ul className="flex gap-x-[5px]">
+              <ul className="flex flex-wrap gap-x-[5px] gap-y-[5px]">
                 {TAG?.multi_select?.map((tag) => (
                   <li
                     key={tag.id}
-                    className="rounded px-[5px] py-[3px] text-xs dark:bg-primary-black"
+                    className="rounded px-[5px] py-[3px] text-xs text-white bg-primary"
                   >
                     #{tag.name}
                   </li>

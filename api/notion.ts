@@ -9,7 +9,7 @@ export const notion = new Client({
   auth: process.env.NOTION_TOKEN,
 });
 
-const pagingSize = 2;
+const pagingSize = 6;
 
 export const getPostList = async () => {
   const databaseId = process.env.NOTION_DATABASEID as string;

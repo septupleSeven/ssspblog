@@ -14,9 +14,9 @@ const Navbar = () => {
   const LogoButton = React.forwardRef<HTMLAnchorElement, LogoButtonProps>(
     ({ onClick, href }, ref) => {
       return (
-        <a href={href} onClick={onClick} ref={ref}>
+        <a href={href} onClick={onClick} ref={ref} className="font-logo font-extrabold text-2xl semi-mobile:text-xl">
           {/* <Image src={} width={} alt="logo" /> */}
-          로고
+          p_Blog
         </a>
       );
     },
@@ -34,15 +34,14 @@ const Navbar = () => {
           group: 0
       }
     };
-    // sessionStorage.removeItem("page");
-    // sessionStorage.removeItem("group");
+
     sessionStorage.setItem("paging", JSON.stringify(initialState));
   };
 
   return (
     <div>
-      <header className="fixed left-0 top-0 z-50 w-full bg-white dark:bg-primary-black">
-        <div className="h-[65px] w-full px-5">
+      <header className="fixed left-0 top-0 z-[5] w-full shadow-under bg-white dark:bg-primary-black">
+        <div className="h-[65px] w-full px-5 semi-mobile:h-[55px]">
           <nav className="flex h-full w-full items-center">
             <div className="flex w-full items-center justify-between">
               <Link href="/" passHref legacyBehavior>

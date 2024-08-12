@@ -59,7 +59,7 @@ const Theme = () => {
     <div className="relative">
       <button
         onClick={() => handleTheme({ theme: theme })}
-        className="relative z-10 flex min-h-[30px] min-w-[30px] items-center justify-center rounded-full border border-primary-white bg-primary-black"
+        className="relative z-10 flex min-h-[30px] min-w-[30px] items-center justify-center rounded-full border border-primary-black bg-white dark:border-primary-white dark:bg-primary-black"
       >
         {isLoaded && <ThemeIcon theme={theme} />}
       </button>
@@ -69,7 +69,7 @@ const Theme = () => {
       >
         <AnimatePresence>
           {isLoaded && themeHandler &&
-            filteredThemes.map((theme, idx) => {
+            filteredThemes.map((thisTheme, idx) => {
               return (
                 <motion.li
                   key={idx}
@@ -79,15 +79,16 @@ const Theme = () => {
                   }}
                   exit={{ top: 0 }}
                   transition={{ duration: 0.3 }}
-                  className={`absolute flex min-h-[30px] min-w-[30px] items-center justify-center rounded-full border-primary-black bg-primary-white`}
+                  className={`absolute flex min-h-[30px] min-w-[30px] items-center justify-center rounded-full bg-primary`}
                 >
                   <button
                     onClick={() => {
                       setThemeHandler(false);
-                      setTheme(theme);
+                      setTheme(thisTheme);
                     }}
+                    className="w-full h-full flex items-center justify-center"
                   >
-                    <ThemeIcon theme={theme} color="text-primary-gray-dark" />
+                    <ThemeIcon theme={thisTheme} color="text-white" />
                   </button>
                 </motion.li>
               );
