@@ -1,88 +1,171 @@
-"use client"
-import { setPage, setGroup, setNextGroup, setPrevGroup, initialStatePaging } from "@/lib/redux/slice";
+"use client";
+import {
+  setPage,
+  setGroup,
+  setNextGroup,
+  setPrevGroup,
+  initialStatePaging,
+  getPagingActionPayload,
+} from "@/lib/redux/slice";
 import { PageDispatch, RootState } from "@/lib/redux/store";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const Pagination = ({ 
-  size, 
+const Pagination = ({
+  size,
   total,
-  pathname
-}: { 
-  size: number; 
+  pathname,
+  isCate,
+}: {
+  size: number;
   total: number;
   pathname: string;
+  isCate: boolean;
 }) => {
-  const pagingStore = useSelector<RootState>(
-    (state) => state.paging,
-  ) as Record<string, initialStatePaging>;
-
+  const pagingStore = useSelector<RootState>((state) => state.paging) as Record<
+    string,
+    initialStatePaging
+  >;
 
   const dispatch = useDispatch<PageDispatch>();
+
+  const getKey = isCate ? "category" : pathname;
 
   useEffect(() => {
     const getPaging = sessionStorage.getItem("paging");
 
-    if(pathname && getPaging){
+    if (getPaging) {
       const getPagingData = JSON.parse(getPaging);
-      dispatch(setPage(getPagingData[pathname].page));
-      dispatch(setGroup(getPagingData[pathname].group));
-    }
 
-  }, [dispatch, pathname, pagingStore]);
-  
+      dispatch(
+        setPage(
+          getPagingActionPayload({
+            option: "initalize",
+            isCate: isCate,
+            state: getPagingData,
+            pathname: pathname,
+            keyName: "page",
+          }),
+        ),
+      );
+      dispatch(
+        setGroup(
+          getPagingActionPayload({
+            option: "initalize",
+            isCate: isCate,
+            state: getPagingData,
+            pathname: pathname,
+            keyName: "group",
+          }),
+        ),
+      );
+    }
+  }, [dispatch, isCate, pathname]);
+
   const pageLength = Math.round(total / size);
   const pagerArr = Array.from({ length: pageLength }, (_, idx) => idx + 1);
 
   const slicedPaginationArr = useMemo(() => {
-    return pagerArr.slice(pagingStore[pathname].group, ((pagingStore[pathname].group) + size));
-  },
-  [pagingStore, pathname, size, pagerArr]
-);
+    return pagerArr.slice(
+      pagingStore[getKey].group,
+      pagingStore[getKey].group + size,
+    );
+  }, [pagingStore, size, pagerArr, getKey]);
 
   const handlePrevGroup = () => {
-    dispatch(setPrevGroup(size))
-    dispatch(setPage(pagingStore[pathname].group))
+    dispatch(
+      setPrevGroup(
+        getPagingActionPayload({
+          option: "vanilla",
+          isCate: isCate,
+          val: size,
+        }),
+      ),
+    );
+
+    dispatch(
+      setPage(
+        getPagingActionPayload({
+          option: "initalize",
+          isCate: isCate,
+          state: pagingStore,
+          pathname: pathname,
+          keyName: "group",
+        }),
+      ),
+    );
   };
 
   const handleNextGroup = () => {
-    dispatch(setNextGroup(size));
-    dispatch(setPage(
-      (pagingStore[pathname].group) + size + 1
-    ));
+    dispatch(
+      setNextGroup(
+        getPagingActionPayload({
+          option: "vanilla",
+          isCate: isCate,
+          val: size,
+        }),
+      ),
+    );
+
+    dispatch(
+      setPage(
+        getPagingActionPayload({
+          option: "nextGroup",
+          isCate: isCate,
+          state: pagingStore,
+          pathname: pathname,
+          keyName: "group",
+          size: size,
+          val: 1,
+        }),
+      ),
+    );
   };
 
   const Pager = React.memo(({ pager }: { pager: number }) => {
-    return (<li className={pager === 
-    pagingStore[pathname].page 
-    ? "font-bold" : "font-normal opacity-40 hover:opacity-100 duration-[0.3s]"}>
-        <button onClick={() => {dispatch(setPage(pager))}}>{pager}</button>
-      </li>)
+    return (
+      <li
+        className={
+          pager === pagingStore[getKey].page
+            ? "font-bold"
+            : "font-normal opacity-40 duration-[0.3s] hover:opacity-100"
+        }
+      >
+        <button
+          onClick={() =>
+            dispatch(
+              setPage({
+                isCategory: isCate,
+                value: pager,
+              }),
+            )
+          }
+        >
+          {pager}
+        </button>
+      </li>
+    );
   });
   Pager.displayName = "Pager";
 
   return (
-    <div className="w-full flex justify-center items-center gap-x-[15px] mt-[40px]">
-      {
-        !pagingStore[pathname].group  
-        ? null
-        : <button onClick={() => dispatch(handlePrevGroup)}>
+    <div className="mt-[40px] flex w-full items-center justify-center gap-x-[15px]">
+      {!pagingStore[getKey].group ? null : (
+        <button onClick={() => handlePrevGroup()}>
           <ChevronLeftIcon className="size-5" />
         </button>
-      }
+      )}
       <ul className="flex gap-x-[15px] text-lg">
-        {slicedPaginationArr.map(
-          (pager, idx) => (<Pager key={idx} pager={pager} />)
-        )}
+        {slicedPaginationArr.map((pager, idx) => (
+          <Pager key={idx} pager={pager} />
+        ))}
       </ul>
-      {
-        pagerArr.length > (pagingStore[pathname].group + size)
-        ? <button onClick={() => dispatch(handleNextGroup)}>
+      {pagerArr.length > pagingStore[getKey].group + size ? (
+        <button onClick={() => handleNextGroup()}>
           <ChevronRightIcon className="size-5" />
         </button>
-        : null
-      }
+      ) : null}
     </div>
   );
 };

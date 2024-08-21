@@ -6,11 +6,15 @@ import { PageDispatch, RootState } from "@/lib/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import {
   initialStatePaging,
+  setCateGroup,
+  setCatePage,
   setGroup,
   setPage,
   setSearchGroup,
   setSearchPage,
 } from "@/lib/redux/slice";
+import { useSearchParams } from "next/navigation";
+import { validCate } from "../../../api/notion";
 
 const PostDetailBottom = ({
   prev,
@@ -31,6 +35,10 @@ const PostDetailBottom = ({
     size: number;
   };
 }) => {
+  const searchParams = useSearchParams();
+  const getCate = searchParams.get("category");
+  const paramCondition = getCate && validCate.includes(getCate) ? true : false;
+
   const pagingStore = useSelector<RootState>((state) => state.paging) as Record<
     string,
     initialStatePaging
@@ -47,14 +55,27 @@ const PostDetailBottom = ({
       const getPagingData = JSON.parse(getPaging);
       dispatch(setSearchPage(getPagingData.search.page));
       dispatch(setSearchGroup(getPagingData.search.group));
+
+      if(paramCondition){
+        dispatch(setCatePage(getPagingData.category.page));
+        dispatch(setCateGroup(getPagingData.category.group));
+      }
+
     }
 
     const getPageNum = Math.floor(currentIndex / size) + 1;
     const getGroupNum = Math.floor((getPageNum - 1) / size) * size;
 
-    dispatch(setPage(getPageNum));
-    dispatch(setGroup(getGroupNum));
-  }, [dispatch, pagingStore, currentIndex, size]);
+    dispatch(setPage({
+      isCategory: false,
+      value: getPageNum
+    }));
+    dispatch(setGroup({
+      isCategory: false,
+      value: getGroupNum
+    }));
+    
+  }, [dispatch, pagingStore, currentIndex, size, paramCondition]);
 
   return (
     <div>

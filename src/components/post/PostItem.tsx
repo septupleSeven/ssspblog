@@ -18,10 +18,19 @@ interface PostItemProps {
     color?: string | null;
   }[];
   outline?: string;
+  cateParam: string | null;
 }
 
 const PostItem = React.memo(
-  ({ postName, title, coverUrl, categories, tags, outline }: PostItemProps) => {
+  ({
+    postName,
+    title,
+    coverUrl,
+    categories,
+    tags,
+    outline,
+    cateParam,
+  }: PostItemProps) => {
     const cateColorPalette = {
       default: "black",
       gray: "bg-notion-gray",
@@ -35,9 +44,19 @@ const PostItem = React.memo(
       red: "bg-notion-red",
     };
 
+    let getCateParam = "";
+
+    if (cateParam) {
+      getCateParam = `?category=${cateParam}`;
+    }
+
     return (
       <li className="group w-full overflow-hidden rounded-md bg-white shadow-reg duration-[0.3s] dark:bg-primary-black dark:hover:bg-primary-black-deep">
-        <Link href={`/posts/${postName}`} className="block h-full">
+        <Link
+          href={`/posts/${postName}${getCateParam}`}
+          className="block h-full"
+          prefetch={true}
+        >
           <figure className="relative flex aspect-video w-full items-center justify-center overflow-hidden bg-fuchsia-700">
             <Image
               src={coverUrl ? coverUrl : "/image/thumbnail404.png"}
@@ -55,25 +74,27 @@ const PostItem = React.memo(
                   {title}
                 </p>
               </div>
-              {tags?.length ? (
-                <ul className="flex gap-x-1">
-                  {tags.map((tag) => {
-                    return (
-                      <li
-                        key={tag.id}
-                        className="w-fit rounded bg-primary px-[5px] py-[3px] text-xs text-white"
-                      >
-                        #{tag.name}
-                      </li>
-                    );
-                  })}
-                </ul>
+              {outline?.length ? (
+                <div>
+                  <p className="line-clamp-2 text-sm opacity-50 duration-[0.3s] group-hover:opacity-100">
+                    {outline}
+                  </p>
+                </div>
               ) : null}
             </div>
-            {outline?.length ? (
-              <div>
-                <p className="line-clamp-2 text-sm opacity-50 duration-[0.3s] group-hover:opacity-100">{outline}</p>
-              </div>
+            {categories?.length ? (
+              <ul className="flex gap-x-1">
+                {categories.map((category) => {
+                  return (
+                    <li
+                      key={category.id}
+                      className="w-fit rounded bg-primary px-[5px] py-[3px] text-xs text-white"
+                    >
+                      #{category.name}
+                    </li>
+                  );
+                })}
+              </ul>
             ) : null}
           </div>
         </Link>

@@ -12,13 +12,18 @@ const Searchbar = () => {
   const [isFocus, setFocus] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+  const params = new URLSearchParams(searchParams);
+
   const handleSearchQuery = (term: string) => {
-    const params = new URLSearchParams(searchParams);
 
     if (term.length) {
       params.set("keyword", term);
     } else {
       params.delete("keyword");
+    }
+
+    if(searchParams.has("category")){
+      params.delete("category");
     }
 
     setParamState(params.toString());
@@ -45,7 +50,7 @@ const Searchbar = () => {
   }, []);
 
   return (
-    <div className="mx-auto my-0 w-full max-w-[1024px]">
+    <div className="mx-auto my-0 mb-[40px] w-full max-w-[1024px]">
       <div
         className={`flex items-center gap-x-[10px] shadow-reg rounded-md bg-primary-white px-[15px] py-[10px] duration-[0.3s] dark:bg-primary-black ${isFocus ? "border border-primary" : ""}`}
       >

@@ -32,6 +32,10 @@ const Navbar = () => {
       search: {
           page: 1,
           group: 0
+      },
+      category: {
+        page: 1,
+        group: 0
       }
     };
 

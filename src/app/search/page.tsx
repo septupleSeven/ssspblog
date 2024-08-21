@@ -1,6 +1,6 @@
 import Container from "@/components/Container";
 import React from "react";
-import { getPostList } from "../../../api/notion";
+import { getPostList, validCate } from "../../../api/notion";
 import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { GetPostListProps, PostListResultsProps } from "@/types/post";
 import PostList from "@/components/post/PostList";
@@ -53,8 +53,7 @@ const page = async ({
         <section className="w-full pb-[150px] pt-[80px] semi-desktop:px-[20px]">
           {total ? (
             <StoreProvider>
-              <PostList posts={results} size={size} total={total} page={1} />
-              {/* <Pagination size={size} total={total} /> */}
+              <PostList posts={results} size={size} total={total} validCate={validCate} page={1} />
             </StoreProvider>
           ) : (
             <Empty title="검색 결과가 없습니다." />

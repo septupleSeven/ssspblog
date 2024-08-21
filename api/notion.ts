@@ -11,9 +11,27 @@ export const notion = new Client({
 
 const pagingSize = 6;
 
-export const getPostList = async () => {
+export const validCate = [ "기술서", "테스트" ];
+
+export const getPostList = async (
+  category?: string
+) => {
+
   const databaseId = process.env.NOTION_DATABASEID as string;
 
+  type filterOptType = {
+    contains: string
+  } | {
+    is_not_empty: true;
+  }
+
+  const filterOpt:filterOptType = (category && validCate.includes(category)) 
+  ? {
+    contains: category
+  } : {
+    is_not_empty: true
+  }
+  
   try {
     const response = await notion.databases.query({
       database_id: databaseId,
@@ -22,6 +40,14 @@ export const getPostList = async () => {
         select: {
           equals: "T",
         },
+        and: [
+          {
+            property: "CATEGORY",
+            multi_select: {
+              ...filterOpt
+            }
+          }, 
+        ]
       },
       sorts: [
         {
@@ -117,9 +143,9 @@ export const getCurrentPost = async (currentPostName: string) => {
   return {
     current: currentPost,
     indexInfo: {
-        currentIndex: currentPostIndex,
-        total: results.length,
-        size: pagingSize,
+      currentIndex: currentPostIndex,
+      total: results.length,
+      size: pagingSize,
     },
     ...nearbyPost,
   };

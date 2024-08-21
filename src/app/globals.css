@@ -444,6 +444,30 @@
     animation: rotate 1.4s ease-in infinite;
 }
 
+.idx_cate__container{
+   
+    li{
+        
+        &:first-child{
+
+            a{
+                border-radius: 6px 0 0 0;
+            }
+
+        }
+
+        &:last-child{
+            
+            a{
+                border-radius: 0 6px 0 0;
+            }
+        
+        }
+
+    }
+    
+}
+
 @keyframes rotate {
     0% {
         transform: rotate(0deg)

@@ -56,6 +56,3 @@ export function isPropTitle(props: any): props is {
 } {
   return props.type === "title";
 }
-
-
-
