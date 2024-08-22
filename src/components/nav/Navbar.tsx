@@ -14,7 +14,6 @@ const Navbar = () => {
     ({ onClick, href }, ref) => {
       return (
         <a href={href} onClick={onClick} ref={ref} className="font-logo font-extrabold text-2xl semi-mobile:text-xl">
-          {/* <Image src={} width={} alt="logo" /> */}
           SS&apos;sPBlog
         </a>
       );

@@ -49,7 +49,7 @@ const Categories = ({
   };
 
   return (
-    <ul className="idx_cate__container w-full overflow-hidden grid grid-cols-8 mb-[30px] border-b-2 border-primary-black dark:border-primary-white semi-tab:grid-cols-4 semi-mobile:flex">
+    <ul className="idx_cate__container max-w-[1024px] mx-auto my-0 w-full overflow-hidden grid grid-cols-8 mb-[30px] border-b-2 border-primary-black dark:border-primary-white semi-tab:grid-cols-4 semi-mobile:flex">
       <li className="w-full h-full relative" key={"all"}>
         <Link href={`/`} passHref legacyBehavior>
           <CateButton cateName={"전체"} onClick={resetCatePage} active={

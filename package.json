@@ -20,7 +20,8 @@
     "react": "^18",
     "react-dom": "^18",
     "react-notion-x": "^6.16.0",
-    "react-redux": "^9.1.2"
+    "react-redux": "^9.1.2",
+    "sharp": "^0.33.5"
   },
   "devDependencies": {
     "@types/node": "^20",

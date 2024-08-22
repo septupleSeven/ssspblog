@@ -5,6 +5,8 @@ import { NotionRenderer } from "react-notion-x";
 import { ExtendedRecordMap } from "notion-types";
 import 'prismjs/themes/prism-tomorrow.css';
 import { useTheme } from "next-themes";
+import Image, { ImageProps } from "next/image";
+import Link, { LinkProps } from "next/link";
 
 const EmptyCollection = (props: any) => <></>;
 
@@ -30,6 +32,18 @@ const Modal = dynamic(
   },
 );
 
+const NextImage = (props: ImageProps) => {
+  return (
+    <Image {...props} width={700} height={0} style={{height: "auto"}} alt="Post Image"/>
+  )
+}
+
+const NextLink = (props: LinkProps) => {
+  return(
+    <Link {...props} />
+  )
+}
+
 const PostDetail = ({ recordMap }: { recordMap: ExtendedRecordMap }) => {
   const { theme } = useTheme();
   const [currentTheme, setCurrentTheme] = useState("");
@@ -43,12 +57,15 @@ const PostDetail = ({ recordMap }: { recordMap: ExtendedRecordMap }) => {
       <NotionRenderer
         darkMode
         recordMap={recordMap}
+        forceCustomImages={true}
         components={{
           Code,
           Collection: EmptyCollection,
           Equation,
           Modal,
-          Pdf
+          Pdf,
+          Image: NextImage,
+          nextLink: NextLink
         }}
       />
     </div>

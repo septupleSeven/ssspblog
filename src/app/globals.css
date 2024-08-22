@@ -407,6 +407,26 @@
 
     }
 
+    .notion-asset-wrapper-image {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        > div{
+            width: 100%;
+            align-items: center;
+        }
+
+        .notion-asset-caption{
+            width: 100%;
+            font-size: .875rem;
+            opacity: 0.6;
+            text-align: center;
+            padding: 5px 0;
+        }
+
+    }
+
 }
 
 .medium-zoom-overlay {

@@ -57,14 +57,18 @@ const PostItem = React.memo(
           className="block h-full"
           prefetch={true}
         >
-          <figure className="relative flex aspect-video w-full items-center justify-center overflow-hidden bg-fuchsia-700">
+          <figure className="relative flex aspect-video w-full items-center justify-center overflow-hidden">
             <Image
-              src={coverUrl ? coverUrl : "/image/thumbnail404.png"}
+              src={coverUrl ? coverUrl : "/image/thumbnail404.jpg"}
               alt="cover"
+              width={0}
+              height={0}
               fill={true}
+              sizes={"(max-width: 100px) 100vw, 100vw"}
               style={{
                 objectFit: coverUrl ? "cover" : `contain`,
               }}
+              priority={true}
             ></Image>
           </figure>
           <div className="flex flex-col gap-y-[10px] px-[15px] pb-[20px] pt-[15px]">

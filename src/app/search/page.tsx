@@ -50,7 +50,7 @@ const page = async ({
   } else {
     return (
       <Container>
-        <section className="w-full pb-[150px] pt-[80px] semi-desktop:px-[20px]">
+        <section className={`w-full semi-desktop:px-[20px] ${total ? "pb-[150px] pt-[80px]" : ""}`}>
           {total ? (
             <StoreProvider>
               <PostList posts={results} size={size} total={total} validCate={validCate} page={1} />
