@@ -8,17 +8,41 @@ import PostDetail from "@/components/post/PostDetail";
 import PostDetailAnchor from "@/components/post/PostDetailAnchor";
 import PostDetailBottom from "@/components/post/PostDetailBottom";
 import StoreProvider from "@/components/StoreProvider";
+import { Metadata, ResolvingMetadata } from "next";
 const renderer = new NotionAPI();
 
+type Props = {
+  params: { id: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const { post } = await getCurrentPost(params.id);
+  const { props } = post;
+  const { NAME } = props;
+  
+  // fetch data
+  // const product = await fetch(`https://.../${id}`).then((res) => res.json())
+ 
+  // optionally access and extend (rather than replace) parent metadata
+  // const previousImages = (await parent).openGraph?.images || []
+ 
+  return {
+    title: NAME?.title[0].plain_text,
+  }
+}
+
 const page = async ({ params }: { params: { id: string } }) => {
-  const { current, indexInfo, prev, next } = await getCurrentPost(params.id);
-  const currentPageId = current[0].id;
+  const { post, indexInfo, prev, next } = await getCurrentPost(params.id);
+  // const currentPageId = post.id;
+  const { props, postId } = post;
+  const { CATEGORY, NAME, TAG } = props;
 
-  const recordMap = await renderer.getPage(currentPageId);
-
-  const { properties } = current[0] as PageObjectResponse &
-    PostListResultsProps;
-  const { CATEGORY, NAME, TAG } = properties;
+  const recordMap = await renderer.getPage(postId);
 
   return (
     <Container>

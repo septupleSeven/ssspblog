@@ -1,4 +1,4 @@
-import { GetPostListProps, isPropRichText, isPropTitle } from "@/types/post";
+import { GetPostListProps, isPropRichText, isPropTitle, PostListResultsProps } from "@/types/post";
 import { Client } from "@notionhq/client";
 import {
   BlockObjectResponse,
@@ -72,7 +72,7 @@ export const getCurrentPost = async (currentPostName: string) => {
 
   const { results } = (await getPostList()) as GetPostListProps;
 
-  const currentPost = await notion.databases
+  const postResults = await notion.databases
     .query({
       database_id: databaseId,
       filter: {
@@ -94,7 +94,8 @@ export const getCurrentPost = async (currentPostName: string) => {
     })
     .then((res) => res.results);
 
-  const currentPostId = currentPost[0].id;
+  const currentPost = postResults[0] as PageObjectResponse & PostListResultsProps;
+  const currentPostId = postResults[0].id;
   const currentPostIndex = results.findIndex((el) => el.id === currentPostId);
 
   type nearbyPostType = {
@@ -141,7 +142,11 @@ export const getCurrentPost = async (currentPostName: string) => {
   }
 
   return {
-    current: currentPost,
+    post: {
+      current: postResults[0],
+      postId: currentPostId,
+      props: currentPost.properties
+    },
     indexInfo: {
       currentIndex: currentPostIndex,
       total: results.length,

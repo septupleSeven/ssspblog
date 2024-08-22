@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Theme from "./Theme";
-import Image from "next/image";
 import React from "react";
 
 const Navbar = () => {
@@ -16,7 +15,7 @@ const Navbar = () => {
       return (
         <a href={href} onClick={onClick} ref={ref} className="font-logo font-extrabold text-2xl semi-mobile:text-xl">
           {/* <Image src={} width={} alt="logo" /> */}
-          p_Blog
+          SS&apos;sPBlog
         </a>
       );
     },
