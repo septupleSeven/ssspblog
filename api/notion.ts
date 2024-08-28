@@ -11,7 +11,7 @@ export const notion = new Client({
 
 const pagingSize = 6;
 
-export const validCate = [ "기술서", "테스트" ];
+export const validCate = [ "UI/UX", "제작기" ];
 
 export const getPostList = async (
   category?: string
