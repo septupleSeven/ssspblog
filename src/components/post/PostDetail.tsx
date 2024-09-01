@@ -34,7 +34,7 @@ const Modal = dynamic(
 
 const NextImage = (props: ImageProps) => {
   return (
-    <Image {...props} width={700} height={0} style={{height: "auto"}} alt="Post Image"/>
+    <Image {...props} width={700} height={0} style={{width: "auto", height: "auto"}} alt="Post Image"/>
   )
 }
 

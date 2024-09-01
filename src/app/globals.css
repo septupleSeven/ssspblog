@@ -16,6 +16,7 @@
 
         .notion-bookmark {
             border: 1px solid rgba(255, 255, 255, 0.4);
+            background-color: #1d2f29;
         }
 
         .notion-callout {
@@ -110,6 +111,7 @@
         overflow: hidden;
         user-select: none;
         border: 1px solid #232E2B;
+        background-color: #c4d4d0;
 
         &>div:first-child {
             flex: 4 1 180px;
