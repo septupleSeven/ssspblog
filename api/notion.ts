@@ -11,7 +11,7 @@ export const notion = new Client({
 
 const pagingSize = 6;
 
-export const validCate = [ "UI/UX", "제작기" ];
+export const validCate = [ "UI/UX", "제작기", "기타" ];
 
 export const getPostList = async (
   category?: string
@@ -54,7 +54,7 @@ export const getPostList = async (
           timestamp: "created_time",
           direction: "descending",
         },
-      ],
+      ]
     });
 
     return {
