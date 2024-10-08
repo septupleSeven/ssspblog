@@ -8,10 +8,16 @@ const nextConfig = {
         NOTION_TOKEN_V2: process.env.NOTION_TOKEN_V2
     },
     images: {
-        remotePatterns: [{
+        remotePatterns: [
+            {
             protocol: "https",
             hostname: "www.notion.so"
-        }]
+        },
+        {
+            protocol: "https",
+            hostname: "prod-files-secure.s3.us-west-2.amazonaws.com"
+        }
+    ]
     },
     async redirects(){
         return [
