@@ -1,12 +1,13 @@
-import Container from "@/components/Container";
+import Container from "@/app/widgets/Container";
 import React from "react";
-import { getPostList, validCate } from "../../../api/notion";
+import { getPostList } from "../../../shared/api/notion";
 import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
-import { GetPostListProps, PostListResultsProps } from "@/types/post";
-import PostList from "@/components/post/PostList";
-import Empty from "@/components/Empty";
-import Pagination from "@/components/Pagination";
-import StoreProvider from "@/components/StoreProvider";
+import { GetPostListProps, usedPostPropsType } from "@/app/types/post-types";
+import PostList from "@/app/entities/post-list/PostList";
+import Empty from "@/app/widgets/Empty";
+import Pagination from "@/app/entities/Pagination";
+import StoreProvider from "@/app/widgets/StoreProvider";
+import { validCate } from "../../../shared/config/config";
 
 const getFitsPost = (keywords: string, postTitle: string) => {
   if (!postTitle) return false;
@@ -23,8 +24,10 @@ const getSearchedPost = async (keyword: string) => {
   const { results, size } = (await getPostList()) as GetPostListProps;
 
   const postInfo: PageObjectResponse[] = results.filter(
-    (post: PageObjectResponse & PostListResultsProps) =>
-      getFitsPost(keyword, post.properties.NAME?.title[0].plain_text!),
+    (post: PageObjectResponse ) => {
+      const props:usedPostPropsType = post.properties;
+      return getFitsPost(keyword, props.NAME?.title[0].plain_text!);
+    }
   );
 
   return {

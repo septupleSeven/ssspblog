@@ -1,22 +1,25 @@
 "use client";
-import { setCateGroup, setCatePage } from "@/lib/redux/slice";
-import { PageDispatch } from "@/lib/redux/store";
+import { setCateGroup, setCatePage } from "@/app/store/redux/slice";
+import { PageDispatch } from "@/app/store/redux/store";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import React from "react";
 import { useDispatch } from "react-redux";
+import { validCateType } from "../../../shared/types/api-types";
 
 const Categories = ({
   validCate,
   total,
 }: {
-  validCate: string[];
+  validCate: validCateType[];
   total: number;
 }) => {
   const searchParams = useSearchParams();
   const getCate = searchParams.get("category");
 
   const dispatch = useDispatch<PageDispatch>();
+
+  const cateNames = validCate.map((cate) => cate.name)
 
   interface CateButtonProps {
     cateName: string;
@@ -26,7 +29,9 @@ const Categories = ({
   }
 
   const CateButton = React.forwardRef<HTMLAnchorElement, CateButtonProps>(
-    ({ cateName, onClick, active, href }, ref) => {
+    ({ cateName, 
+      onClick, 
+      active, href }, ref) => {
       return (
         <a 
         href={href} 
@@ -52,15 +57,19 @@ const Categories = ({
     <ul className="idx_cate__container max-w-[1024px] mx-auto my-0 w-full overflow-hidden grid grid-cols-8 mb-[30px] border-b-2 border-primary-black dark:border-primary-white semi-tab:grid-cols-4 semi-mobile:flex">
       <li className="w-full h-full relative" key={"all"}>
         <Link href={`/`} passHref legacyBehavior>
-          <CateButton cateName={"전체"} onClick={resetCatePage} active={
-            !getCate || !validCate.includes(getCate) ? true : false
+          <CateButton cateName={"전체"} 
+          onClick={resetCatePage} 
+          active={
+            !getCate || !cateNames.includes(getCate) ? true : false
           } />
         </Link>
       </li>
-      {validCate.map((cate, idx) => (
+      {cateNames.map((cate, idx) => (
         <li key={idx} className="w-full flex relative">
           <Link href={`/?category=${cate}`} passHref legacyBehavior>
-            <CateButton cateName={`# ${cate}`} onClick={resetCatePage} active={
+            <CateButton cateName={`# ${cate}`} 
+            onClick={resetCatePage} 
+            active={
               getCate === cate ? true : false
             } />
           </Link>

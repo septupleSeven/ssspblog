@@ -1,13 +1,9 @@
-import { GetPostListProps, isPropRichText, isPropTitle, PostListResultsProps } from "@/types/post";
-import { Client } from "@notionhq/client";
+import { GetPostListProps, isPropRichText, isPropTitle, PostListResultsProps } from "@/app/types/post-types";
 import {
   BlockObjectResponse,
   PageObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
-
-export const notion = new Client({
-  auth: process.env.NOTION_TOKEN,
-});
+import { notion } from "./notion-sdk";
 
 const pagingSize = 6;
 

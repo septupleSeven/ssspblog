@@ -1,29 +1,12 @@
 "use client";
+import { PostItemProps } from "@/app/types/post-types";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-interface PostItemProps {
-  postName: string;
-  title?: string;
-  coverUrl?: string | null;
-  categories?: {
-    id: string;
-    name: string;
-    color?: string | null;
-  }[];
-  tags?: {
-    id: string;
-    name: string;
-    color?: string | null;
-  }[];
-  outline?: string;
-  cateParam: string | null;
-}
-
 const PostItem = React.memo(
   ({
-    postName,
+    slug,
     title,
     coverUrl,
     categories,
@@ -46,14 +29,10 @@ const PostItem = React.memo(
 
     let getCateParam = "";
 
-    if (cateParam) {
-      getCateParam = `?category=${cateParam}`;
-    }
-
     return (
       <li className="group w-full overflow-hidden rounded-md bg-white shadow-reg duration-[0.3s] dark:bg-primary-black dark:hover:bg-primary-black-deep">
         <Link
-          href={`/posts/${postName}${getCateParam}`}
+          href={`/posts/${slug}${getCateParam}`}
           className="block h-full"
           prefetch={true}
         >

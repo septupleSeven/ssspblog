@@ -1,6 +1,6 @@
 "use client"
 import React, { useRef } from 'react'
-import { makeStore, PageStore } from '../lib/redux/store';
+import { makeStore, PageStore } from '../store/redux/store';
 import { Provider } from 'react-redux';
 
 const StoreProvider = ({children}:{children: React.ReactNode;}) => {

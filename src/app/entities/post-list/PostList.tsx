@@ -1,13 +1,14 @@
 "use client";
 import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import PostItem from "./PostItem";
-import { PostListResultsProps } from "@/types/post";
+import { usedPostPropsType } from "@/app/types/post-types";
 import { useSelector } from "react-redux";
-import { RootState } from "@/lib/redux/store";
+import { RootState } from "@/app/store/redux/store";
 import React, { useMemo } from "react";
-import { initialStatePaging } from "@/lib/redux/slice";
+import { initialStatePaging } from "@/app/store/redux/slice";
 import Pagination from "../Pagination";
 import { usePathname, useSearchParams } from "next/navigation";
+import { validCateType } from "../../../../shared/types/api-types";
 
 const getPageIndex = (page: number, page_size: number) => {
   const getEnd = page * page_size;
@@ -31,18 +32,19 @@ const PostList = ({
   validCate,
   page = 1,
 }: {
-  posts: PageObjectResponse[];
+  posts: any[];
   size: number;
   total: number;
-  validCate: string[];
+  validCate: validCateType[];
   page?: number;
 }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const getCate = searchParams.get("category");
   const currentPathname = pathnameCondition(pathname);
+  const cateNames = validCate.map((cate) => cate.name)
 
-  const paramCondition = getCate && validCate.includes(getCate) ? true : false;
+  const paramCondition = getCate && cateNames.includes(getCate) ? true : false;
 
   const pagingStore = useSelector<RootState>((state) => state.paging) as Record<
     string,
@@ -64,18 +66,18 @@ const PostList = ({
     <>
       <ul className="mx-auto my-0 grid w-full max-w-[1024px] grid-cols-3 gap-5 semi-tab:grid-cols-2 semi-mobile:grid-cols-1">
         {slicedPostList.map(
-          (post: PageObjectResponse & PostListResultsProps) => {
+          (post: PageObjectResponse) => {
             const { id, properties, cover } = post;
-            const { CATEGORY, TAG, NAME, OUTLINE, POSTNAME } = properties;
+            const { CATEGORY, TAG, NAME, OUTLINE, SLUG } = properties as usedPostPropsType;
 
-            if (!POSTNAME?.rich_text.length) {
-              return <div key={id}>ERROR: POSTNAME is undefined</div>;
+            if (!SLUG?.rich_text.length) {
+              return <div key={id}>ERROR: SLUG is undefined</div>;
             }
 
             return (
               <PostItem
                 key={id}
-                postName={POSTNAME.rich_text[0]?.plain_text}
+                slug={SLUG.rich_text[0]?.plain_text}
                 coverUrl={
                   cover
                     ? cover.type === "file"

@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
-import { PageDispatch, RootState } from "@/lib/redux/store";
+import { PageDispatch, RootState } from "@/app/store/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import {
   initialStatePaging,
@@ -12,39 +12,44 @@ import {
   setPage,
   setSearchGroup,
   setSearchPage,
-} from "@/lib/redux/slice";
+} from "@/app/store/redux/slice";
 import { useSearchParams } from "next/navigation";
-import { validCate } from "../../../api/notion";
+import { validCateType } from "../../../../../shared/types/api-types";
 
 const PostDetailBottom = ({
   prev,
   next,
-  indexInfo,
+  paging,
+  cate
 }: {
   prev: {
-    POSTNAME: string | null;
-    NAME: string | null;
+    postSlug: string | null;
+    postName: string | null;
   };
   next: {
-    POSTNAME: string | null;
-    NAME: string | null;
+    postSlug: string | null;
+    postName: string | null;
   };
-  indexInfo: {
+  paging: {
     currentIndex: number;
     total: number;
     size: number;
   };
+  cate: validCateType[]
 }) => {
   const searchParams = useSearchParams();
   const getCate = searchParams.get("category");
-  const paramCondition = getCate && validCate.includes(getCate) ? true : false;
+
+  const paramCondition = getCate && cate.some(
+    (el) => el.name === getCate 
+  ) ? true : false;
 
   const pagingStore = useSelector<RootState>((state) => state.paging) as Record<
     string,
     initialStatePaging
   >;
 
-  const { currentIndex, size } = indexInfo;
+  const { currentIndex, size } = paging;
 
   const dispatch = useDispatch<PageDispatch>();
 
@@ -80,30 +85,30 @@ const PostDetailBottom = ({
   return (
     <div>
       <div className="border-b-2 border-t-2 border-primary-black dark:border-primary-white">
-        {prev.POSTNAME ? (
+        {prev.postSlug ? (
           <Link
-            href={`/posts/${prev.POSTNAME}`}
+            href={`/posts/${prev.postSlug}`}
             className="border-primary-black-50 dark:border-primary-white-50 group flex items-center gap-x-[20px] border-b pb-[15px] pt-[15px]"
           >
             <ChevronUpIcon className="size-8 duration-[0.3s] group-hover:translate-y-[-5px]" />
             <div className="flex w-full flex-col gap-y-[3px] overflow-hidden">
               <span className="text-sm opacity-50 duration-[0.3s] group-hover:opacity-100">이전 글</span>
               <span className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-medium duration-[0.3s] group-hover:underline group-hover:text-primary semi-mobile:text-base">
-                {prev.NAME}
+                {prev.postName}
               </span>
             </div>
           </Link>
         ) : null}
-        {next.POSTNAME ? (
+        {next.postSlug ? (
           <Link
-            href={`/posts/${next.POSTNAME}`}
+            href={`/posts/${next.postSlug}`}
             className="group flex items-center gap-x-[20px] pb-[15px] pt-[15px]"
           >
             <ChevronDownIcon className="size-8 duration-[0.3s] group-hover:translate-y-[5px]" />
             <div className="flex flex-col gap-y-[3px] overflow-hidden">
               <span className="text-sm opacity-50 duration-[0.3s] group-hover:opacity-100">다음 글</span>
               <span className="overflow-hidden text-ellipsis whitespace-nowrap text-lg font-medium duration-[0.3s] group-hover:underline group-hover:text-primary semi-mobile:text-base">
-                {next.NAME}
+                {next.postName}
               </span>
             </div>
           </Link>

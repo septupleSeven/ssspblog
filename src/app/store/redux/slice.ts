@@ -108,10 +108,6 @@ export const pagingSlice = createSlice({
       paging.search.group = action.payload;
       sessionStorage.setItem("paging", JSON.stringify(paging));
     },
-
-
-
-
     setCatePage: (paging, action: PayloadAction<number>) => {
       paging.category.page = action.payload;
       sessionStorage.setItem("paging", JSON.stringify(paging));

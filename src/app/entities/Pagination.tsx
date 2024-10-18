@@ -6,8 +6,8 @@ import {
   setPrevGroup,
   initialStatePaging,
   getPagingActionPayload,
-} from "@/lib/redux/slice";
-import { PageDispatch, RootState } from "@/lib/redux/store";
+} from "@/app/store/redux/slice";
+import { PageDispatch, RootState } from "@/app/store/redux/store";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -63,7 +63,7 @@ const Pagination = ({
     }
   }, [dispatch, isCate, pathname]);
 
-  const pageLength = Math.round(total / size);
+  const pageLength = Math.ceil(total / size);
   const pagerArr = Array.from({ length: pageLength }, (_, idx) => idx + 1);
 
   const slicedPaginationArr = useMemo(() => {

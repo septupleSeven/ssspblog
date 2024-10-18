@@ -1,5 +1,5 @@
-import Container from '@/components/Container'
-import Loader from '@/components/Loader'
+import Container from '@/app/widgets/Container'
+import Loader from '@/app/widgets/Loader'
 import React from 'react'
 
 const loading = () => {
