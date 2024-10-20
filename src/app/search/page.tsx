@@ -1,11 +1,10 @@
 import Container from "@/app/widgets/Container";
 import React from "react";
-import { getPostList } from "../../../shared/api/notion";
+import { getCachedPostList } from "../../../shared/api/notion";
 import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { GetPostListProps, usedPostPropsType } from "@/app/types/post-types";
 import PostList from "@/app/entities/post-list/PostList";
 import Empty from "@/app/widgets/Empty";
-import Pagination from "@/app/entities/Pagination";
 import StoreProvider from "@/app/widgets/StoreProvider";
 import { validCate } from "../../../shared/config/config";
 
@@ -21,7 +20,7 @@ const getFitsPost = (keywords: string, postTitle: string) => {
 const getSearchedPost = async (keyword: string) => {
   if (!keyword) return false;
 
-  const { results, size } = (await getPostList()) as GetPostListProps;
+  const { results, size } = (await getCachedPostList()) as GetPostListProps;
 
   const postInfo: PageObjectResponse[] = results.filter(
     (post: PageObjectResponse ) => {

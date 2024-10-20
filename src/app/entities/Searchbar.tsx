@@ -61,7 +61,7 @@ const Searchbar = () => {
           onKeyUp={(e) => handleEnterEvent(e)}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
-          placeholder="제목으로 검색"
+          placeholder="제목으로 검색하기"
         />
         <button
           className="flex min-h-[35px] min-w-[35px] items-center justify-center rounded-full bg-primary"
