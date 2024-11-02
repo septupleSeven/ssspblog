@@ -5,7 +5,6 @@ import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { GetPostListProps, usedPostPropsType } from "@/app/types/post-types";
 import PostList from "@/app/entities/post-list/PostList";
 import Empty from "@/app/widgets/Empty";
-import StoreProvider from "@/app/widgets/StoreProvider";
 import { validCate } from "../../../shared/config/config";
 
 const getFitsPost = (keywords: string, postTitle: string) => {

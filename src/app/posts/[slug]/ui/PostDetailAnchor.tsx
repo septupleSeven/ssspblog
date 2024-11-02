@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { ExtendedRecordMap } from "notion-types";
 import { BookmarkIcon, LinkIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import {motion} from "framer-motion";
+import { motion } from "framer-motion";
 
 const PostDetailAnchor = ({ recordMap }: { recordMap: ExtendedRecordMap }) => {
   const blockIds = Object.keys(recordMap.block);

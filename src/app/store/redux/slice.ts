@@ -5,9 +5,6 @@ import {
   payloadObj,
 } from "@/app/types/slice-types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { siteConfigVal } from "../../../../shared/config/config";
-import resolveConfig from 'tailwindcss/resolveConfig'
-import tailwindConfig from "../../../../tailwind.config";
 
 function pathnameCondition(pathname: string) {
   if (pathname === "/search") return "search";
