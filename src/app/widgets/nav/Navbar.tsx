@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootStateSiteConfig, SiteConfigDispatch } from "@/app/store/redux/store";
 import { initialStateSiteConfig } from "@/app/types/slice-types";
 import { changeStyle, setStorageValue, toggleModal } from "@/app/store/redux/slice";
+import { AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const siteConfigStore = useSelector<RootStateSiteConfig>((state) => state.siteConfig) as initialStateSiteConfig;
@@ -89,7 +90,9 @@ const Navbar = () => {
           </div>
         </header>
       </div>
-      {siteConfigStore.modalOpen ? <SiteConfig /> : null}
+      <AnimatePresence>
+        {siteConfigStore.modalOpen ? <SiteConfig /> : null}
+      </AnimatePresence>
     </>
   );
 };
