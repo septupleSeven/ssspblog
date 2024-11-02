@@ -26,13 +26,13 @@ const Theme = () => {
   }) => {
     switch (theme) {
       case "light":
-        return <SunIcon className={`size-5 ${color}`} />;
+        return <SunIcon className={`size-[20px] ${color}`} />;
       case "dark":
-        return <MoonIcon className={`size-5 ${color}`} />;
+        return <MoonIcon className={`size-[20px] ${color}`} />;
       case "system":
-        return <ComputerDesktopIcon className={`size-5 ${color}`} />;
+        return <ComputerDesktopIcon className={`size-[20px] ${color}`} />;
       default:
-        return <ComputerDesktopIcon className={`size-5 ${color}`} />;
+        return <ComputerDesktopIcon className={`size-[20px] ${color}`} />;
     }
   };
 

@@ -4,13 +4,13 @@ import {
   setGroup,
   setNextGroup,
   setPrevGroup,
-  initialStatePaging,
   getPagingActionPayload,
 } from "@/app/store/redux/slice";
-import { PageDispatch, RootState } from "@/app/store/redux/store";
+import { PageDispatch, RootStatePaging } from "@/app/store/redux/store";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { initialStatePaging } from "../types/slice-types";
 
 const Pagination = ({
   size,
@@ -23,7 +23,7 @@ const Pagination = ({
   pathname: string;
   isCate: boolean;
 }) => {
-  const pagingStore = useSelector<RootState>((state) => state.paging) as Record<
+  const pagingStore = useSelector<RootStatePaging>((state) => state.paging) as Record<
     string,
     initialStatePaging
   >;

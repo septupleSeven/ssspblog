@@ -1,6 +1,7 @@
 import { ThemeProvider } from "next-themes";
 import Navbar from "./nav/Navbar";
 import Footer from "./Footer";
+import StoreProvider from "./StoreProvider";
 
 interface ContainerProps {
   children: React.ReactNode;
@@ -9,11 +10,13 @@ interface ContainerProps {
 const Container = ({ children }: ContainerProps) => {
   return (
     <ThemeProvider attribute="class">
-      <Navbar />
-      <main className="mt-[65px] w-full min-h-[calc(100vh-125px)] semi-mobile:mt-[55px] semi-mobile:min-h-[calc(100vh-115px)] semi-mobile:text-[15px]">
-        {children}
-      </main>
-      <Footer />
+      <StoreProvider>
+        <Navbar />
+        <main className="mt-[65px] min-h-[calc(100vh-125px)] w-full semi-mobile:mt-[55px] semi-mobile:min-h-[calc(100vh-115px)] semi-mobile:text-[15px]">
+          {children}
+        </main>
+        <Footer />
+      </StoreProvider>
     </ThemeProvider>
   );
 };

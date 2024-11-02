@@ -36,6 +36,10 @@ export type usedPostPropsType = {
   SLUG?: {
     type: "rich_text";
     rich_text: Array<RichTextItemResponse>;
+  },
+  THUMB?: {
+    type: "rich_text";
+    rich_text: Array<RichTextItemResponse>;
   }
 };
 
@@ -47,7 +51,7 @@ export type generateMetaDataProp = {
 export interface PostItemProps {
   slug: string;
   title?: string;
-  coverUrl?: string | null;
+  thumb?: string | null;
   categories?: {
     id: string;
     name: string;
@@ -60,4 +64,5 @@ export interface PostItemProps {
   }[];
   outline?: string;
   cateParam: string | null;
+  listStyle: string;
 }

@@ -2,10 +2,9 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
-import { PageDispatch, RootState } from "@/app/store/redux/store";
+import { PageDispatch, RootStatePaging } from "@/app/store/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  initialStatePaging,
   setCateGroup,
   setCatePage,
   setGroup,
@@ -15,6 +14,7 @@ import {
 } from "@/app/store/redux/slice";
 import { useSearchParams } from "next/navigation";
 import { validCateType } from "../../../../../shared/types/api-types";
+import { initialStatePaging } from "@/app/types/slice-types";
 
 const PostDetailBottom = ({
   prev,
@@ -44,7 +44,7 @@ const PostDetailBottom = ({
     (el) => el.name === getCate 
   ) ? true : false;
 
-  const pagingStore = useSelector<RootState>((state) => state.paging) as Record<
+  const pagingStore = useSelector<RootStatePaging>((state) => state.paging) as Record<
     string,
     initialStatePaging
   >;

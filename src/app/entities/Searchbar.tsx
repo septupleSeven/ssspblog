@@ -55,7 +55,7 @@ const Searchbar = () => {
         className={`flex items-center gap-x-[10px] shadow-reg rounded-md bg-primary-white px-[15px] py-[10px] duration-[0.3s] dark:bg-primary-black ${isFocus ? "border border-primary" : ""}`}
       >
         <input
-          className="placeholder:text-primary-black-50 dark:placeholder:text-primary-white-50 focus: h-full w-full bg-transparent text-[18px] outline-none"
+          className="placeholder:text-primary-black-50 dark:placeholder:text-primary-white-50 focus: h-full w-full bg-transparent text-[1.125rem] outline-none semi-mobile:text-[1rem]"
           type="text"
           onChange={(e) => handleSearchQuery(e.target.value)}
           onKeyUp={(e) => handleEnterEvent(e)}
@@ -70,7 +70,7 @@ const Searchbar = () => {
           ref={buttonRef}
         >
           {isLoaded && (
-            <MagnifyingGlassIcon className="size-5 text-white" />
+            <MagnifyingGlassIcon className="size-[20px] text-white" />
           )}
         </button>
       </div>

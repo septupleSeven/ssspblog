@@ -1,22 +1,24 @@
 import React from "react";
 import Container from "@/app/widgets/Container";
-import { generateMetaDataProp, usedPostPropsType } from "@/app/types/post-types";
+import {
+  generateMetaDataProp,
+  usedPostPropsType,
+} from "@/app/types/post-types";
 import PostDetail from "@/app/posts/[slug]/ui/PostDetail";
-import PostDetailAnchor from "@/app/posts/[slug]/ui/PostDetailAnchor";
-import StoreProvider from "@/app/widgets/StoreProvider";
 import { Metadata } from "next";
 import { getCachedPostList, getPost } from "../../../../shared/api/notion";
 import { renderer } from "../../../../shared/api/notion-sdk";
 import PostDetailBottom from "@/app/posts/[slug]/ui/PostDetailBottom";
 import Empty from "@/app/widgets/Empty";
 import { validCate } from "../../../../shared/config/config";
+import PostDetailBtnWrapper from "./ui/PostDetailBtnWrapper";
 
-export async function generateMetadata(
-  { params }: generateMetaDataProp,
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: generateMetaDataProp): Promise<Metadata> {
   const currentPost = await getPost(params.slug);
 
-  if(!currentPost){
+  if (!currentPost) {
     return {
       title: "SS'sPBlog",
       description: "개인 블로그입니다.",
@@ -29,7 +31,7 @@ export async function generateMetadata(
 
   return {
     title: NAME?.title[0].plain_text,
-  }
+  };
 }
 
 const page = async ({ params }: { params: { slug: string } }) => {
@@ -85,16 +87,15 @@ const page = async ({ params }: { params: { slug: string } }) => {
 
           <PostDetail recordMap={recordMap} />
 
-          <StoreProvider>
-            <PostDetailBottom
-              prev={prev}
-              next={next}
-              paging={paging}
-              cate={validCate}
-            />
-          </StoreProvider>
+          <PostDetailBottom
+            prev={prev}
+            next={next}
+            paging={paging}
+            cate={validCate}
+          />
 
-          <PostDetailAnchor recordMap={recordMap} />
+          <PostDetailBtnWrapper recordMap={recordMap} />
+          {/* <PostDetailAnchor recordMap={recordMap} /> */}
         </div>
       </section>
     </Container>

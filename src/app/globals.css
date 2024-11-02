@@ -4,10 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
-.dark,
+/* .dark,
 .light {
-    transition: background-color 0.4s, color 0.4s;
-}
+    transition: background-color 0.2s, color 0.2s;
+} */
 
 .dark {
     @apply bg-primary-gray-dark text-primary-white;

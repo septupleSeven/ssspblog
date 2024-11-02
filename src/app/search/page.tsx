@@ -23,16 +23,16 @@ const getSearchedPost = async (keyword: string) => {
   const { results, size } = (await getCachedPostList()) as GetPostListProps;
 
   const postInfo: PageObjectResponse[] = results.filter(
-    (post: PageObjectResponse ) => {
-      const props:usedPostPropsType = post.properties;
+    (post: PageObjectResponse) => {
+      const props: usedPostPropsType = post.properties;
       return getFitsPost(keyword, props.NAME?.title[0].plain_text!);
-    }
+    },
   );
 
   return {
     results: postInfo,
     total: postInfo.length,
-    size: size
+    size: size,
   };
 };
 
@@ -41,7 +41,9 @@ const page = async ({
 }: {
   searchParams: { keyword: string };
 }) => {
-  const { results, total, size } = await getSearchedPost(searchParams.keyword) as GetPostListProps;
+  const { results, total, size } = (await getSearchedPost(
+    searchParams.keyword,
+  )) as GetPostListProps;
 
   if (!results) {
     return (
@@ -52,11 +54,17 @@ const page = async ({
   } else {
     return (
       <Container>
-        <section className={`w-full semi-desktop:px-[20px] ${total ? "pb-[150px] pt-[80px]" : ""}`}>
+        <section
+          className={`w-full semi-desktop:px-[20px] ${total ? "pb-[150px] pt-[80px]" : ""}`}
+        >
           {total ? (
-            <StoreProvider>
-              <PostList posts={results} size={size} total={total} validCate={validCate} page={1} />
-            </StoreProvider>
+            <PostList
+              posts={results}
+              size={size}
+              total={total}
+              validCate={validCate}
+              page={1}
+            />
           ) : (
             <Empty title="검색 결과가 없습니다." />
           )}

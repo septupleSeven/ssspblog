@@ -25,6 +25,15 @@ export type validCateType = {
   name: string
 }
 
+export type siteConfigType = {
+  id: string,
+  name: string,
+  base?: string,
+  values: Array<{name: string, val:string}>
+}
+
+export type siteConfigValType = siteConfigType[]
+
 export type nearbyPostType = {
   postSlug: string | null;
   postName: string | null;
