@@ -3,9 +3,7 @@
 const nextConfig = {
     env: {
         NOTION_TOKEN: process.env.NOTION_TOKEN,
-        NOTION_DATABASEID: process.env.NOTION_DATABASEID,
-        NOTION_ACTIVE_USER: process.env.NOTION_ACTIVE_USER,
-        NOTION_TOKEN_V2: process.env.NOTION_TOKEN_V2
+        NOTION_DATABASEID: process.env.NOTION_DATABASEID
     },
     images: {
         remotePatterns: [

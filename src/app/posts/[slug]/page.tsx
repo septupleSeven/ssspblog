@@ -95,7 +95,6 @@ const page = async ({ params }: { params: { slug: string } }) => {
           />
 
           <PostDetailBtnWrapper recordMap={recordMap} />
-          {/* <PostDetailAnchor recordMap={recordMap} /> */}
         </div>
       </section>
     </Container>
