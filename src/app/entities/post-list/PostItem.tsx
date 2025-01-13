@@ -13,15 +13,18 @@ const PostItem = React.memo(
     tags,
     outline,
     cateParam,
-    listStyle
+    listStyle,
   }: PostItemProps) => {
     let getCateParam = "";
 
-    const listClassNameConfig:Record<string, {
-      li: string;
-      link: string;
-      figure: string;
-    }> = {
+    const listClassNameConfig: Record<
+      string,
+      {
+        li: string;
+        link: string;
+        figure: string;
+      }
+    > = {
       gallery: {
         li: "bg-white dark:bg-primary-black dark:hover:bg-primary-black-deep",
         link: "block h-full",
@@ -32,19 +35,26 @@ const PostItem = React.memo(
         link: "grid grid-cols-[270px_1fr] semi-tab:grid-cols-[200px_1fr] semi-mobile:block",
         figure: "h-full semi-mobile:hidden",
       },
-    }
+    };
 
     return (
-      <li className={`group w-full overflow-hidden shadow-reg rounded-md ${listClassNameConfig[listStyle].li} duration-[0.3s]`}>
+      <li
+        className={`group w-full overflow-hidden rounded-md shadow-reg ${listClassNameConfig[listStyle].li} focus-within:ouline-1 duration-[0.3s] focus-within:outline`}
+      >
         <Link
           href={`/posts/${slug}${getCateParam}`}
           className={`${listClassNameConfig[listStyle].link}`}
           prefetch={true}
+          title={title}
         >
-          <figure className={`flex ${listClassNameConfig[listStyle].figure} relative aspect-video w-full items-center justify-center overflow-hidden`}>
+          <figure
+            className={`flex ${listClassNameConfig[listStyle].figure} relative aspect-video w-full items-center justify-center overflow-hidden`}
+          >
             <Image
-              src={thumb ? `/image/thumb/${thumb}.jpg` : "/image/thumbnail404.jpg"}
-              alt="cover"
+              src={
+                thumb ? `/image/thumb/${thumb}.jpg` : "/image/thumbnail404.jpg"
+              }
+              alt={`${title} 섬네일`}
               width={0}
               height={0}
               fill={true}

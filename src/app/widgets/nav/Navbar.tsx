@@ -6,13 +6,22 @@ import React, { useEffect, useRef, useState } from "react";
 import StyleConfig from "./StyleConfig";
 import SiteConfig from "../modals/SiteConfig";
 import { useDispatch, useSelector } from "react-redux";
-import { RootStateSiteConfig, SiteConfigDispatch } from "@/app/store/redux/store";
+import {
+  RootStateSiteConfig,
+  SiteConfigDispatch,
+} from "@/app/store/redux/store";
 import { initialStateSiteConfig } from "@/app/types/slice-types";
-import { changeStyle, setStorageValue, toggleModal } from "@/app/store/redux/slice";
+import {
+  changeStyle,
+  setStorageValue,
+  toggleModal,
+} from "@/app/store/redux/slice";
 import { AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
-  const siteConfigStore = useSelector<RootStateSiteConfig>((state) => state.siteConfig) as initialStateSiteConfig;
+  const siteConfigStore = useSelector<RootStateSiteConfig>(
+    (state) => state.siteConfig,
+  ) as initialStateSiteConfig;
   const dispatch = useDispatch<SiteConfigDispatch>();
   const firstLoadRef = useRef(true);
 
@@ -57,33 +66,35 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if(typeof window !== "undefined"){
-
-      if(firstLoadRef.current){
+    if (typeof window !== "undefined") {
+      if (firstLoadRef.current) {
         dispatch(setStorageValue());
-        dispatch(changeStyle({ configId: "fontSize"}));
+        dispatch(changeStyle({ configId: "fontSize" }));
 
         firstLoadRef.current = false;
       }
-
     }
   }, [dispatch]);
 
   return (
     <>
       <div>
-        <header className={`fixed left-0 top-0 z-[5] w-full bg-white shadow-under dark:bg-primary-black`}>
+        <header
+          className={`fixed left-0 top-0 z-[5] w-full bg-white shadow-under dark:bg-primary-black`}
+        >
           <div className="h-[65px] w-full px-5 semi-mobile:h-[55px]">
             <nav className="flex h-full w-full items-center">
               <div className="flex w-full items-center justify-between">
-                <Link href="/" passHref legacyBehavior>
+                <Link href="/" passHref legacyBehavior title="홈으로 이동">
                   <LogoButton onClick={resetPage} />
                 </Link>
                 <div className="flex items-center gap-x-[15px]">
                   <Theme />
-                  <StyleConfig onClick={() => {
-                    dispatch(toggleModal(true))
-                  }} />
+                  <StyleConfig
+                    onClick={() => {
+                      dispatch(toggleModal(true));
+                    }}
+                  />
                 </div>
               </div>
             </nav>

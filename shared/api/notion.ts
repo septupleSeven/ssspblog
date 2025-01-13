@@ -61,7 +61,9 @@ export const getPostList = async (category?: string) => {
   };
 };
 
-export const getCachedPostList = async (category?: string): Promise<cacheDataType> => {
+export const getCachedPostList = async (
+  category?: string,
+): Promise<cacheDataType> => {
   const currentTime = Date.now();
 
   let cateId: string;
@@ -81,7 +83,7 @@ export const getCachedPostList = async (category?: string): Promise<cacheDataTyp
         size: pagingSize,
       },
       timestamp: 0,
-      expiration: 100000,
+      expiration: 1000,
     };
   }
 
@@ -98,7 +100,7 @@ export const getCachedPostList = async (category?: string): Promise<cacheDataTyp
   }
 };
 
-export const getPost = async (slug: string)  => {
+export const getPost = async (slug: string) => {
   const postList = await getCachedPostList();
   const { results } = postList;
 
