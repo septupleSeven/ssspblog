@@ -40,8 +40,6 @@ const Searchbar = () => {
       return false;
     }
 
-    console.log(pathname);
-
     return push(`${pathname}search?${paramState.toString()}`);
   };
 
