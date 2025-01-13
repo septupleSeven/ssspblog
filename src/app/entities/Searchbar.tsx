@@ -15,14 +15,13 @@ const Searchbar = () => {
   const params = new URLSearchParams(searchParams);
 
   const handleSearchQuery = (term: string) => {
-
     if (term.length) {
       params.set("keyword", term);
     } else {
       params.delete("keyword");
     }
 
-    if(searchParams.has("category")){
+    if (searchParams.has("category")) {
       params.delete("category");
     }
 
@@ -41,6 +40,8 @@ const Searchbar = () => {
       return false;
     }
 
+    console.log(pathname);
+
     return push(`${pathname}search?${paramState.toString()}`);
   };
 
@@ -52,10 +53,10 @@ const Searchbar = () => {
   return (
     <div className="mx-auto my-0 mb-[40px] w-full max-w-[1024px]">
       <div
-        className={`flex items-center gap-x-[10px] shadow-reg rounded-md bg-primary-white px-[15px] py-[10px] duration-[0.3s] dark:bg-primary-black ${isFocus ? "border border-primary" : ""}`}
+        className={`flex items-center gap-x-[10px] rounded-md bg-primary-white px-[15px] py-[10px] shadow-reg duration-[0.3s] dark:bg-primary-black ${isFocus ? "border border-primary" : ""}`}
       >
         <input
-          className="placeholder:text-primary-black-50 dark:placeholder:text-primary-white-50 focus: h-full w-full bg-transparent text-[1.125rem] outline-none semi-mobile:text-[1rem]"
+          className="focus: h-full w-full bg-transparent text-[1.125rem] outline-none placeholder:text-primary-black-50 dark:placeholder:text-primary-white-50 semi-mobile:text-[1rem]"
           type="text"
           onChange={(e) => handleSearchQuery(e.target.value)}
           onKeyUp={(e) => handleEnterEvent(e)}
