@@ -6,7 +6,7 @@ Next.js(14)와 Notion API를 활용하여 제작한 개인 블로그입니다. �
 - [https://ssspblog.vercel.app/](https://ssspblog.vercel.app/)
 <br/>
 
-### 원본 노션
+### 포스팅의 원본 노션
 - [노션](https://quilled-relation-fd1.notion.site/ssspBlog-96f7c9d0c3a84c1fbe2bb3e9fbb08f0e?pvs=4)
 <br/>
 
